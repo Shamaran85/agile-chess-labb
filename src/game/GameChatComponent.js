@@ -1,12 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class GameChatComponent extends Component {
   render() {
-    return (
-      <div>
-        GameChatComponent
-      </div>
-    );
+    // Chat Component
+    return <div>GameChatComponent</div>;
   }
 }
 
