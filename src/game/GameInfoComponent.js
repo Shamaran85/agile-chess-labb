@@ -16,13 +16,15 @@ class GameInfoComponent extends Component {
 
   render() {
     return (
-      <div className="gameInfoBody">
-        <h1>GameInfo</h1>
-        <p><strong>Player Name:</strong> {this.props.userName}</p>
-        <p><strong>Opponent Name:</strong> {this.props.userOpponent}</p>
-        <p><strong>Status:</strong> {this.props.status}</p>
-
-        <p><strong>Match result:</strong> {this.props.result}</p>
+      <div className="gameInfo">
+        <h1><span class="glyphicon glyphicon-knight" aria-hidden="true"></span> Chess.JS</h1>
+        <div className="gameInfoBody">
+            <h5><span class="glyphicon glyphicon-pawn" aria-hidden="true"></span> Game Info: </h5>
+            <p><strong>Player Name:</strong> {this.props.userName}</p>
+            <p><strong>Opponent Name:</strong> {this.props.userOpponent}</p>
+            <p><strong>Status:</strong> {this.props.status}</p>
+            <p><strong>Match result:</strong> {this.props.result}</p>
+        </div>
       </div>
     );
   }

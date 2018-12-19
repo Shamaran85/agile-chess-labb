@@ -30,9 +30,20 @@
     transform: rotate(360deg);
   }
 }
-.gameInfoBody  {
-  border: black solid 1px;
-  padding: 2em;
+.gameInfo  {
+  border-radius: 10px;
+  padding: 1.5em;
   margin: 1em;
   float: left;
+  background-color: #282c34;
+  color: white;
+  
+}
+.gameInfo h1 {
+  margin-bottom: 1em;
+}
+.gameInfoBody {
+  color: white;
+  font-size: 10px;
+  text-align: left;
 }
