@@ -48,8 +48,8 @@ class GameStore {
     }
 
     if (chess.move({ from, to })) {
-      let newState = [{ from: from, to: to, fen: chess.fen() }]
-      newHistory = newHistory.concat(newState)
+      let newState = { from: from, to: to, fen: chess.fen() }
+      newHistory = [...newHistory, newState]
     }
 
     this.setState({
