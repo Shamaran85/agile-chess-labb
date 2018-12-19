@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+ import React, { Component } from 'react';
 
 import GameBoardComponent from './GameBoardComponent';
 import GameInfoComponent from './GameInfoComponent';
@@ -23,7 +23,12 @@ class GameComponent extends Component {
         <div>
             <GameChatComponent />
             <GameBoardComponent />
-            <GameInfoComponent />
+            <GameInfoComponent 
+            userName1={"Unknow"} 
+            userOpponent2={"Unknow"} 
+            status={"Still playing"} 
+            result={"Match is not over"}
+            />
         </div>
         <div>
             <PlayerHistoryComponent />

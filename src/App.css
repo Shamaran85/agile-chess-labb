@@ -30,3 +30,9 @@
     transform: rotate(360deg);
   }
 }
+.gameInfoBody  {
+  border: black solid 1px;
+  padding: 2em;
+  margin: 1em;
+  float: left;
+}
