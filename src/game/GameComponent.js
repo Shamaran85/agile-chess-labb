@@ -24,8 +24,8 @@ class GameComponent extends Component {
             <GameChatComponent />
             <GameBoardComponent />
             <GameInfoComponent 
-            userName1={"Unknow"} 
-            userOpponent2={"Unknow"} 
+            userName={"Unknow"} 
+            userOpponent={"Unknow"} 
             status={"Still playing"} 
             result={"Match is not over"}
             />
