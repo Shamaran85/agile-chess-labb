@@ -22,7 +22,7 @@ class GameInfoComponent extends Component {
             <h5><span class="glyphicon glyphicon-pawn" aria-hidden="true"></span> Game Info: </h5>
             <p><strong>Player Name:</strong> {this.props.userName}</p>
             <p><strong>Opponent Name:</strong> {this.props.userOpponent}</p>
-            <p><strong>Status:</strong> {this.props.status}</p>
+            <p><strong>Status: <span class="glyphicon glyphicon-adjust" aria-hidden="true"></span></strong> {this.props.status}</p>
             <p><strong>Match result:</strong> {this.props.result}</p>
         </div>
       </div>
