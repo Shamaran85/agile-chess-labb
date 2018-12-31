@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import CreateGameForm from './components/CreateGameForm';
 
 
 class LobbyCreateGameComponent extends Component {
   render() {
     return (
       <div>
-        Create Game 
+        Create Game
+        <CreateGameForm />
       </div>
     );
   }

@@ -5,6 +5,7 @@
   "dependencies": {
     "chess.js": "^0.10.2",
     "chessground": "^7.3.4",
+    "firebase": "^5.7.0",
     "react": "^16.6.3",
     "react-chessground": "^1.0.0",
     "react-dom": "^16.6.3",
