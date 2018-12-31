@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
 
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, /* Link */ } from "react-router-dom";
 
 import LobbyComponent from './lobby/LobbyComponent';
 import GameComponent from './game/GameComponent';
