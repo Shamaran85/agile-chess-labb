@@ -1,47 +1,65 @@
 import React, { Component } from "react";
 import "./GameChatComponent.css";
 
-const MOCK = [
-  {
-    user: "Nadim",
-    text: "I know how to redux!"
-  },
-  {
-    user: "Kadar",
-    text: "Can I take your picture?"
-  }
-];
+import firebaseDB from "../firebase.config";
 
 class GameChatComponent extends Component {
   state = {
-    messages: MOCK,
-    input: ""
+    name: "",
+    msg: "",
+    messages: []
   };
 
-  handleChange(e) {
-    this.setState({ input: e.target.value });
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    const chatMessage = {
-      user: "Kadar",
-      text: this.state.input
-    };
-    this.setState({
-      messages: [...this.state.messages, chatMessage],
-      input: ""
+  componentDidMount() {
+    let messagesRef = firebaseDB
+      .database()
+      .ref("messages")
+      .orderByKey()
+      .limitToLast(10);
+    messagesRef.on("child_added", snapshot => {
+      let message = {
+        name: snapshot.val().name,
+        text: snapshot.val().text,
+        id: snapshot.key
+      };
+      this.setState({ messages: [...this.state.messages, message] });
     });
   }
 
-  render() {
-    const { messages, input } = this.state;
+  handleMsgInput(e) {
+    this.setState({ msg: e.target.value });
+  }
 
-    const displayMessages = messages.map((message, index) => {
+  handleNameInput(e) {
+    this.setState({ name: e.target.value });
+  }
+
+  handleClick(e) {
+    e.preventDefault();
+
+    const msg = this.state.msg;
+    const name = this.state.name;
+
+    if (msg.length > 0 && name.length > 0) {
+      const data = { name: name, text: msg };
+      firebaseDB
+        .database()
+        .ref("messages")
+        .push(data);
+      this.setState({ msg: "" });
+    } else {
+      alert("Enter your name and a message.");
+    }
+  }
+
+  render() {
+    const { messages, msg, name } = this.state;
+
+    const displayMessages = messages.map(message => {
       return (
-        <li key={index} className="chat__item">
+        <li key={message.id} className="chat__item">
           <div className="chat__text">
-            <span>{message.user}:</span> {message.text}
+            <span>{message.name}:</span> {message.text}
           </div>
         </li>
       );
@@ -57,14 +75,26 @@ class GameChatComponent extends Component {
           <ul className="chat__messages">{displayMessages}</ul>
         </div>
 
-        <form onSubmit={e => this.handleSubmit(e)}>
+        <form>
           <input
-            onChange={e => this.handleChange(e)}
-            value={input}
-            placeholder="Type your message and press enter..."
+            onChange={e => this.handleMsgInput(e)}
+            value={msg}
+            placeholder="Type your message here..."
             type="text"
-            className="chat__input"
+            className="msg__input"
           />
+
+          <input
+            onChange={e => this.handleNameInput(e)}
+            value={name}
+            placeholder="Your name..."
+            type="text"
+            className="name__input"
+          />
+
+          <button className="submit__btn" onClick={e => this.handleClick(e)}>
+            Send
+          </button>
         </form>
       </div>
     );
