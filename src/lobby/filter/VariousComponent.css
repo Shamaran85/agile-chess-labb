@@ -1,0 +1,68 @@
+.variousComponent{
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: grey;
+}
+
+.variousComponent h3{
+  color:grey;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-weight: normal;
+}
+
+.various-checkboxes-div{
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  margin-left: 17vh;
+}
+
+.various-row{
+  margin-left: 80px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.various-row1{
+  display: flex;
+  flex-direction: column;
+  margin-left: 3px;
+  margin-right: 5px;
+}
+
+.various-row2{
+  display: flex;
+  flex-direction: column;
+  margin-left: 40px;
+  margin-right: 5px;
+}
+
+.various-row3{
+  display: flex;
+  flex-direction: column;
+  margin-left: 40px;
+  margin-right: 5px;
+}
+
+.margin-row{
+  margin-left: 100px;
+}
+
+.checkbox-span{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.checkbox-input{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 0;
+}
+
+.checkbox-label{
+  margin-bottom: 5px;
+}

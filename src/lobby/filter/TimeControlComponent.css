@@ -1,0 +1,38 @@
+.timeControlComponent{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: grey;
+}
+
+.timeControlComponent h3{
+  color:grey;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-weight: normal;
+}
+
+.timeControl-checkboxes-div{
+  text-align: left;
+}
+
+.time-control-row{
+  margin-left: 81px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.checkbox-span{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.checkbox-input{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 20px;
+  height: 20px;
+}
