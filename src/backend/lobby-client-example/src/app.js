@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { User, Event, Post, Put } from './components/';
+import { User, Event, Post, Put, PutRxJS } from './components/';
 
 export default class App extends Component {
     render() {
@@ -7,8 +7,10 @@ export default class App extends Component {
             <React.Fragment>
                 <Post />
                 <Put />
+                <PutRxJS />
+
                 <User />
-                <Event/>
+                <Event />
             </React.Fragment>
         );
     }
