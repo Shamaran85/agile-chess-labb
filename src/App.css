@@ -35,15 +35,34 @@
   padding: 1.5em;
   margin: 1em;
   float: left;
-  background-color: #282c34;
-  color: white;
+  background-color: #F4A460;
+  color: black;
   
 }
 .gameInfo h1 {
   margin-bottom: 1em;
 }
+.gameInfo h4 {
+  text-align: left;
+}
 .gameInfoBody {
-  color: white;
+  color: black;
   font-size: 10px;
   text-align: left;
+  margin-left: 5%;
+}
+.result-table {
+  text-align: left;
+  font-size: 9px;
+}
+.result-table table, th, td {
+  padding: 5px;
+}
+.result-table th, td {
+  border: 1px solid white;
+  border-radius: 3px;
+  text-align: center;
+}
+.bestof5 {
+  text-align: center;
 }

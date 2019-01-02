@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import GameComponent from './GameComponent';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import '../App.css';
 
 //User1 it's you who is playing.
@@ -11,21 +12,58 @@ class GameInfoComponent extends Component {
   constructor(props) {
     super(props);
   }
-
-
+matchResult() {
+  if(this.result === 'win') {
+    return (1);
+  } else {
+    return (0);
+  }
+}
 
   render() {
     return (
       <div className="gameInfo">
-        <h1><span class="glyphicon glyphicon-knight" aria-hidden="true"></span> Chess.JS</h1>
+        <h1><FontAwesomeIcon icon="chess-knight" /> Chess.JS</h1>
+        <h4><FontAwesomeIcon icon="chess-pawn" /> Game Info: </h4>
         <div className="gameInfoBody">
-            <h5><span class="glyphicon glyphicon-pawn" aria-hidden="true"></span> Game Info: </h5>
             <p><strong>Player Name:</strong> {this.props.userName}</p>
             <p><strong>Opponent Name:</strong> {this.props.userOpponent}</p>
-            <p><strong>Status: <span class="glyphicon glyphicon-adjust" aria-hidden="true"></span></strong> {this.props.status}</p>
+            <p><strong>Status: </strong> {this.props.status}</p>
             <p><strong>Match result:</strong> {this.props.result}</p>
         </div>
+        <div className="result-table">
+        <h2>Match result history: </h2>
+        <h3 className="bestof5">BEST OF 5 <FontAwesomeIcon icon="trophy" /> </h3>
+          <table>
+            <tr>
+               <th>The Player</th>
+               <th>Win/Lose</th>
+               <th>Win/Lose</th>
+               <th>Win/Lose</th>
+               <th>Win/Lose</th>
+               <th>Win/Lose</th>
+            </tr>
+            <tr>
+               <td><strong>Player Name:</strong> {this.props.userName}</td>
+               <td>{this.matchResult}</td>
+               <td>{this.matchResult}</td>
+               <td>{this.matchResult}</td>
+               <td>{this.matchResult}</td>
+               <td>{this.matchResult}</td>
+            </tr>
+            <tr>
+               <td><strong>Opponent Name</strong> {this.props.userOpponent}</td>
+               <td>{this.matchResult}</td>
+               <td>{this.matchResult}</td>
+               <td>{this.matchResult}</td>
+               <td>{this.matchResult}</td>
+               <td>{this.matchResult}</td>
+            </tr>
+          </table>
+        </div>
       </div>
+      
+      
     );
   }
 }
