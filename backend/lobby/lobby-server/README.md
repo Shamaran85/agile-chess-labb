@@ -1,29 +1,22 @@
-# The simple realtime API - Client side
-The simple realtime API is based on Nodejs, Expressjs, MongoDB, Socket.io and JWT. You may want to view the online demo [here](https://nguyenkhois.github.io/api-socketio-mongodb/client/dist/).
+# The simple realtime API - Server side
+The simple realtime API is based on Nodejs, Expressjs, MongoDB, Socket.io and JWT.
 
 Server side
 * Nodejs
 * Expressjs
-* MongoDB version 4 on AWS (or mLab version 3 on Heroku)
+* MongoDB version 4
 * Socker.io
 * JWT
-* Docker on AWS
-
-Client side:
-* React
-* RxJS
 
 Hosting:
+* Docker
 * Amazon Web Service (AWS)
-* Heroku
 
 ## Feature
 * Using access token (JWT) for all client requests.
 * Supported methods are only GET, POST and PUT.
 * It returns `insertedId` when you insert new data into the database via this API.
-* The API is hosted both at:
-    * http://aws.vlexikon.com:1600/ (It's always ready to use.)
-    * https://gsockapi.herokuapp.com/ -> With SSL (You may wait for a while when you access this API in the first time.)
+* The API is hosted at [http://aws.vlexikon.com:1600/](http://aws.vlexikon.com:1600/)
 
 * You must have __ACCESS TOKEN__ for all requests. :-)
 
@@ -39,9 +32,14 @@ Hosting:
 	* `eventList` - It returns the current event list.
 
 ## Using
+* Installed MongoDB is the first requirement.
+* Change the API configs at:
+    * `/config/database.js`: for database MongoDB.
+    * `/config/webserver.js`: for Expressjs server.
+* Run `npm i` to install all needed dependencies.
+
 You may want to use [Insomnia](https://insomnia.rest/) for your test. It makes your life easier. ;-)
 
-* View `/src/config/index.js` file if you want to know about the API config.
-* Open the web browser console to view the results.
-* Run `npm i` to install all needed dependencies.
-* Run `npm start` to start your local web server at `http://localhost:9000`.
+## Tested
+* mLab on Heroku (MongoDB 3.6.9).
+* MongoDB 4.1.6 on AWS.
