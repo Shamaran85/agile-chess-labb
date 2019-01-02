@@ -8,6 +8,7 @@ export class Event extends Component {
             events: []
         };
     }
+    
     componentDidMount() {
         this.mounted = true;
 
@@ -31,17 +32,20 @@ export class Event extends Component {
         }
     }
 
-
     render() {
         console.log('state', this.state)
-        return (
-            <div>
-                <h3>EVENTS:</h3>
-                
-                {this.state.events.map((item, index)=>
-                    <p key={index}>{JSON.stringify(item)}</p>
-                )}
-            </div>
-        );
+        if (this.state.events.length > 0) {
+            return (
+                <div>
+                    <h3>EVENTS:</h3>
+                    
+                    {this.state.events.map((item, index)=>
+                        <p key={index}>{JSON.stringify(item)}</p>
+                    )}
+                </div>
+            );
+        } else {
+            return null;
+        }
     }
 };

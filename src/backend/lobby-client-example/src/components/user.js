@@ -8,6 +8,7 @@ export class User extends Component {
             users: []
         };
     }
+    
     componentDidMount() {
         this.mounted = true;
 
@@ -34,14 +35,18 @@ export class User extends Component {
 
     render() {
         console.log('state', this.state)
-        return (
-            <div>
-                <h3>USERS:</h3>
-                
-                {this.state.users.map((item, index)=>
-                    <p key={index}>{JSON.stringify(item)}</p>
-                )}
-            </div>
-        );
+        if (this.state.users.length > 0) {
+            return (
+                <div>
+                    <h3>USERS:</h3>
+                    
+                    {this.state.users.map((item, index)=>
+                        <p key={index}>{JSON.stringify(item)}</p>
+                    )}
+                </div>
+            );
+        } else {
+            return null;
+        }
     }
 };
