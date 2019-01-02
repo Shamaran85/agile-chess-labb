@@ -5,6 +5,10 @@
 /.pnp
 .pnp.js
 
+# Added 2019-01-02
+node_modules
+package-lock.json
+
 # testing
 /coverage
 
