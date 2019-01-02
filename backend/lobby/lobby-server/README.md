@@ -33,6 +33,7 @@ Hosting:
 
 ## Using
 * Installed MongoDB is the first requirement.
+* Create a new database with this name `chessdb`.
 * Change the API configs at:
     * `/config/database.js`: for database MongoDB.
     * `/config/webserver.js`: for Expressjs server.
