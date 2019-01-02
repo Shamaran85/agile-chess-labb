@@ -12,11 +12,13 @@ class GameInfoComponent extends Component {
   constructor(props) {
     super(props);
   }
-matchResult() {
+matchResult(){
+  var winScore = 1;
+  var loseScore = 0; 
   if(this.result === 'win') {
-    return (1);
+    return (winScore);
   } else {
-    return (0);
+    return (loseScore);
   }
 }
 
