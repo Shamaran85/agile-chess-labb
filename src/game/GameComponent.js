@@ -21,12 +21,12 @@ class GameComponent extends Component {
     return (
       <div>
         <div>
-            <GameChatComponent />
-            <GameBoardComponent />
-            <GameInfoComponent />
+          <GameChatComponent />
+          <GameBoardComponent fen={this.state.fen} />
+          <GameInfoComponent />
         </div>
         <div>
-            <PlayerHistoryComponent />
+          <PlayerHistoryComponent />
         </div>
         <p>Demo-message:{this.state.message}</p>
       </div>
