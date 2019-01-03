@@ -25,8 +25,11 @@ class LobbyStore {
     }
 
     storeUserInfoToLocalStorage(payload) {
-        storeToLocalStorage('userInfo', payload);
-        return this.userInfo.next(payload);
+        storeToLocalStorage('userInfo', payload)
+            .then(() => this.userInfo.next(payload))
+            .catch((err) => console.err(err));
+            
+        return this.userInfo;
     }
     /**
      * Payload structure
