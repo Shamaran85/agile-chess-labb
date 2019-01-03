@@ -28,9 +28,11 @@ class LobbyStore {
         storeToLocalStorage('userInfo', payload)
             .then(() => this.userInfo.next(payload))
             .catch((err) => console.err(err));
-            
+
         return this.userInfo;
     }
+
+    
     /**
      * Payload structure
      * @param {*} payload = {
