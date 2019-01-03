@@ -29,7 +29,7 @@ class LobbyStore {
             .then(() => this.userInfo.next(payload))
             .catch((err) => console.err(err));
 
-        return this.userInfo;
+        return false;
     }
 
     
