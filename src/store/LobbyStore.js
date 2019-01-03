@@ -1,43 +1,39 @@
 import { BehaviorSubject } from 'rxjs';
 import { socket } from '../api/socket.io';
-import { userArgs, eventArgs, socketAPI } from '../config/';
-
-// Using for connection testing
-socket.on('message', (message) => {
-    console.log('Responsed message', message);
-});
+import { eventArgs, socketAPI } from '../config/';
 
 class LobbyStore {
     constructor() {
-        this.userBehavior = new BehaviorSubject([]);
         this.eventBehavior = new BehaviorSubject([]);
-
-        socket.on(userArgs.ioEvent, (data) => {
-            this.userBehavior.next(data);
-        });
+        this.userInfo = new BehaviorSubject({});
 
         socket.on(eventArgs.ioEvent, (data) => {
             this.eventBehavior.next(data);
         });
-    }
 
-    getUsers() {
-        return this.userBehavior;
+        retrieveFromLocalStorage('userInfo')
+            .then((data) => this.userInfo.next(data))
+            .catch((err) => console.error(err));
     }
 
     getEvents() {
         return this.eventBehavior;
     }
 
+    getLocalUserInfo() {
+        return this.userInfo;
+    }
+
+    storeUserInfoToLocalStorage(payload) {
+        storeToLocalStorage('userInfo', payload);
+        return this.userInfo.next(payload);
+    }
     /**
-     * updateEvent() service
-     * @param {*} payload
-     * 
      * Payload structure
-     * const payload = {   
-     *           id: "eventIdString",
-     *           content: { JSON object }
-     *       };
+     * @param {*} payload = {
+     *      id: "eventIdString",
+     *      content: { JSON object }
+     * }
      */
     updateEvent(payload) {
         const eventId = payload.id;
@@ -53,9 +49,35 @@ class LobbyStore {
             }),
             body: JSON.stringify(eventContent)
         })
-        .then(() => console.log('Event is updated successfully!'))
-        .catch((error) => console.log(error));
+            .then(() => console.log('Event is updated successfully!'))
+            .catch((err) => console.log(err));
     }
 }
 
+// FUNCTIONS
+export function retrieveFromLocalStorage(key, defaultReturn = {}) {
+    return new Promise((resolve, reject) => {
+        if (typeof (Storage) === 'undefined') {
+            return reject(new Error('The web browser is not supported web storage.'));
+        }
+
+        if (localStorage.getItem(key)) {
+            resolve(JSON.parse(localStorage.getItem(key)));
+        } else {
+            resolve(defaultReturn);
+        }
+    });
+}
+
+export function storeToLocalStorage(key, data) {
+    return new Promise((resolve, reject) => {
+        if (typeof (Storage) === 'undefined') {
+            return reject(new Error('The web browser is not supported web storage.'));
+        }
+
+        resolve(localStorage.setItem(key, JSON.stringify(data)));
+    });
+}
+
+// Export modules
 export default new LobbyStore();
