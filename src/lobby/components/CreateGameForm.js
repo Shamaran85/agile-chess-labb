@@ -51,17 +51,6 @@ const createGameForm = (props) => {
               defaultValue={3}
               max={9}
               min={1}
-              trackStyle={{ backgroundColor: '#d85000', height: 10 }}
-              handleStyle={{
-                borderColor: 'rgb(224, 224, 224)',
-                borderRadius: '1px',
-                height: 28,
-                width: 28,
-                marginLeft: -14,
-                marginTop: -9,
-                backgroundColor: '#eee',
-              }}
-              railStyle={{ backgroundColor: '#fff', height: 12 }}
               onChange={props.sliderChange}
               
             />
@@ -72,9 +61,9 @@ const createGameForm = (props) => {
           </div>
           {ratingRange}
           <div className="submitChoice">
-            <button onClick={(event) => {props.submitGame(event, 'bK')}}><img src={bK} alt=""/></button>
-            <button onClick={(event) => {props.submitGame(event, 'wbK')}}><img className="middle" src={wbK} alt=""/></button>
-            <button onClick={(event) => {props.submitGame(event, 'wK')}}><img src={wK} alt=""/></button>
+            <button onClick={(event) => {props.submitGame(event, 'b')}}><img src={bK} alt=""/></button>
+            <button onClick={(event) => {props.submitGame(event, 'wb')}}><img className="middle" src={wbK} alt=""/></button>
+            <button onClick={(event) => {props.submitGame(event, 'w')}}><img src={wK} alt=""/></button>
           </div>
         </form>
       </div>

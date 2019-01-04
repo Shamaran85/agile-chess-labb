@@ -42,6 +42,7 @@
 }
 .cross:hover {
   cursor: pointer;
+  background-color: #d8d8d8;
 }
 
 .display-block {
@@ -76,8 +77,9 @@
 }
 
 .sliderContainer {
-  padding: 20px;
+  padding: 20px 30px;
   background-color: #eee;
+  
 }
 
 .labelContainer {
@@ -104,10 +106,14 @@
   font-weight: bolder;
   background-color: #eee;
 }
+.switchRank:hover {
+  cursor: pointer;
+  opacity: 0.9;
+}
 
 .submitChoice {
  text-align: center;
-  
+ margin-bottom: 15px;
 }
 .submitChoice button {
   margin-right: 10px;
@@ -120,7 +126,7 @@
 
 .rangeContainer {
   background-color: #eee;
-  padding: 20px;
+  padding: 20px 30px;
   margin-bottom: 20px;
 }
 
@@ -131,6 +137,13 @@
   width: 28px;
   margin-top: -9px;
   background-color: rgb(238, 238, 238);
+}
+.rc-slider-handle:hover {
+  border-color: #9E9E9E;
+}
+.rc-slider-handle:active, .rc-slider-handle:focus {
+  box-shadow: 0 0 5px #484848;
+  border-color: #9E9E9E;
 }
 
 .rc-slider-rail {

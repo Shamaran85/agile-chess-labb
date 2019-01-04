@@ -38,7 +38,14 @@ class LobbyCreateGameComponent extends Component {
   handleSubmit = (event, i) => {
     event.preventDefault()
     console.log(i)
-    this.setState({ ...this.state, playerColor: i, show: !this.state.show })
+    let playerColor = i;
+    i === 'wb' 
+      ? Math.floor(Math.random() * 2 ) < 1 
+        ? playerColor = 'b' 
+        : playerColor = 'w' 
+      : playerColor = i;
+    console.log(playerColor);
+    this.setState({ ...this.state, playerColor: playerColor, show: !this.state.show })
     console.log(this.state)
   }
   render() {
