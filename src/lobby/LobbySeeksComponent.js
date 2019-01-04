@@ -10,7 +10,7 @@ class LobbySeeksComponent extends Component {
       <div>
         <div>
             <p>Seeks</p>
-            {this.newComp}
+            {newComp}
         </div>
       </div>
     );
