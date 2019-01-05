@@ -17,6 +17,7 @@
   top:50%;
   left:50%;
   transform: translate(-50%,-50%);
+  box-shadow: 0 0px 40px 5px #252525;
   
 }
 .main h2 {

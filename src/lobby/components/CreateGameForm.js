@@ -45,7 +45,7 @@ const createGameForm = (props) => {
           </div>
           <div className="sliderContainer">
             <div className="labelContainer">
-              <label htmlFor="">Minuter per spelare: <strong>{props.minutes}</strong></label>
+              <label htmlFor="">Minuter per spelare: <strong>{props.time / 60}</strong></label>
             </div>
             <Slider
               defaultValue={3}
@@ -56,8 +56,8 @@ const createGameForm = (props) => {
             />
           </div>
           <div className="switchRankContainer">
-            <div className={!props.rankOn ? "switchRank special" : "switchRank" } onClick={() => {props.handleClick(0)}}>Ej rankat</div>
-            <div className={props.rankOn ? "switchRank special" : "switchRank" } onClick={() => {props.handleClick(1)}}>Rankat</div>
+            <div className={!props.rankOn ? "switchRank special" : "switchRank" } onClick={() => {props.handleRank(0)}}>Ej rankat</div>
+            <div className={props.rankOn ? "switchRank special" : "switchRank" } onClick={() => {props.handleRank(1)}}>Rankat</div>
           </div>
           {ratingRange}
           <div className="submitChoice">
