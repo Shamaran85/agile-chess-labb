@@ -31,7 +31,12 @@ io.on('connection', (socket) => {
     socket.on('clientInfo', function (data) {
         console.log(data);
         socket.emit('message', { text: 'I hear you client' }); // Answer the client
-    })
+    });
+
+    // Listen for new Chat Messages
+    socket.on("chat", function (msg) {
+        io.emit("chat", msg);
+    });
 
     // Emit data direct when the client has connected successfully
     MongoClient.connect(dbServer.uri, { useNewUrlParser: true }, (err, client) => {
@@ -79,15 +84,15 @@ app.put('/events/:id', updateEvent);
 function getCurrentUserListAndEmit(socket, dbo, userArgs) {
     try {
         dbo.collection(userArgs.collection)
-        .find({}).toArray((err, users) => {
-            if (!err) {
-                socket.emit(userArgs.ioEvent, users);
-            } else {
-                console.error(err);
-            }
-        });
-    } catch(err) {
-      console.error('Error in getCurrentUserListAndEmit');
+            .find({}).toArray((err, users) => {
+                if (!err) {
+                    socket.emit(userArgs.ioEvent, users);
+                } else {
+                    console.error(err);
+                }
+            });
+    } catch (err) {
+        console.error('Error in getCurrentUserListAndEmit');
     }
 }
 
