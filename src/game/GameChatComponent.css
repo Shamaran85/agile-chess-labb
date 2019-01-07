@@ -22,7 +22,7 @@
 /* Chat Messages  */
 .chat__messages__container {
   background-color: #eee;
-  height: 207px;
+  height: 233px;
   overflow-y: scroll;
 }
 
@@ -46,7 +46,7 @@
 /* Chat Message Input Field */
 .msg__input {
   height: 24px;
-  width: 288px;
+  width: 244px;
   background-color: #fff;
   padding: 0 5px;
   border: none;
@@ -55,15 +55,11 @@
   border-bottom: 1px solid #ccc;
 }
 
-/* Name Input Field */
-.name__input {
-  height: 24px;
-  width: 240px;
-  background-color: #fff;
-  padding: 0 5px;
+.submit__btn {
   border: none;
-  outline: none;
+  height: 26px;
 }
+
 /* Scrollbar from w3 */
 ::-webkit-scrollbar {
   width: 10px;
