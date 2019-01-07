@@ -173,7 +173,7 @@ function getLastUserListAndEmit(io, dbo, userArgs, res) {
                 res.status(500).end();
             }
         });
-    } catch {
+    } catch(err) {
         res.status(500).end();
     }
 }

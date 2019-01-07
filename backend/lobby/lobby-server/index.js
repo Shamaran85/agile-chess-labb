@@ -86,8 +86,8 @@ function getCurrentUserListAndEmit(socket, dbo, userArgs) {
                 console.error(err);
             }
         });
-    } catch {
-        console.error('Error');
+    } catch(err) {
+      console.error('Error in getCurrentUserListAndEmit');
     }
 }
 
@@ -101,8 +101,8 @@ function getCurrentEventListAndEmit(socket, dbo, eventArgs) {
                 console.error(err);
             }
         });
-    } catch {
-        console.error('Error');
+    } catch(err) {
+      console.error('Error in getCurrentEventListAndEmit');
     }
 }
 //------------- END FUNCTIONS ---------------

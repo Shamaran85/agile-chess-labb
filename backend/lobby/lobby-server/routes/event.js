@@ -171,7 +171,7 @@ function getLastEventListAndEmit(io, dbo, eventArgs, res) {
                 res.status(500).end();
             }
         });
-    } catch {
+    } catch(err) {
         res.status(500).end();
     }
 }
