@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CreateGameForm from './components/CreateGameForm';
 import LobbyStore from '../store/LobbyStore';
+import { userArgs, eventArgs, socketAPI } from '../config';
 
 class LobbyCreateGameComponent extends Component {
   constructor(props) {
@@ -24,7 +25,6 @@ class LobbyCreateGameComponent extends Component {
 
     // Stream data from RxJS service
     LobbyStore.getLocalUserInfo().subscribe(data => {
-      console.log('comp-createGame-localUserInfo', data);
       this.handleSetState({ localUserInfo: data });
     });
   }
@@ -84,7 +84,66 @@ class LobbyCreateGameComponent extends Component {
       ratingLimits: { low: value[0] * 25, high: value[1] * 25 }
     });
   };
+
+  createUserAndNewGame = payload => {
+    const newUser = {
+      name: payload.name
+    };
+
+    const fetchUrl = userArgs.fetchUrl;
+    fetch(fetchUrl, {
+      method: 'POST',
+      headers: new Headers({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + socketAPI.accessToken
+      }),
+      body: JSON.stringify(newUser)
+    })
+      .then(response => response.json())
+      .then(result => {
+        console.log("userId", result);
+        //this.setState({ insertedUserId: result.insertedId });
+        this.createGame(result.insertedId)
+
+      })
+      .catch(error => console.log(error));
+  };
+
+  createGame = id => {
+    const newGame = {
+      creatorId: id,
+      gameType: this.state.gameType,
+      timeControl: this.state.timeControl,
+      rankOn: this.state.rankOn,
+      time: this.state.time,
+      ratingLimits: this.state.ratingLimits,
+      playerColor: this.state.playerColor
+    };
+
+    const fetchUrl = eventArgs.fetchUrl;
+    fetch(fetchUrl, {
+      method: 'POST',
+      headers: new Headers({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + socketAPI.accessToken
+      }),
+      body: JSON.stringify(newGame)
+    })
+      .then(response => response.json())
+      .then(result => {
+        console.log("eventId", result);
+        //this.setState({ insertedUserId: result.insertedId });
+
+        LobbyStore.storeUserInfoToLocalStorage({
+          _id: result.insertedId
+        });
+      })
+      .catch(error => console.log(error));
+  };
   handleSubmit = (event, i) => {
+    // Check
     event.preventDefault();
     console.log(i);
     let playerColor = i;
@@ -99,19 +158,28 @@ class LobbyCreateGameComponent extends Component {
       playerColor: playerColor,
       show: !this.state.show
     });
+
     console.log(this.state);
-    LobbyStore.storeUserInfoToLocalStorage({
-      _id: 'a88dhhkk35kkdj10cnnbw663bb',
-      name: 'Erik Andersson',
-      gameType: this.state.gameType,
-      timeControl: this.state.timeControl,
-      rankOn: this.state.rankOn,
-      time: this.state.time,
-      ratingLimits: this.state.ratingLimits,
-      playerColor: this.state.playerColor
-    });
+    if (Object.keys(this.state.localUserInfo).length > 0) {
+      console.log('localuser', this.state.localUserInfo);
+      this.createGame(this.state.localUserInfo._id);
+    } else {
+      const newUser = {
+        name: 'Anonym'
+      };
+
+      this.createUserAndNewGame(newUser)
+    }
+
+    
+
+    /* if(local === null)
+      new userInfo
+    else
+      getCurrentUser */
   };
   render() {
+    console.log('comp-createGame-localUserInfo', this.state.localUserInfo);
     return (
       <div>
         <p onClick={this.showModal}>Create Game</p>
