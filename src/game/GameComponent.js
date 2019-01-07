@@ -16,13 +16,14 @@ class GameComponent extends Component {
     gameStore.getSubject().subscribe((st) => {
       this.setState(st);
     });
+    gameStore.joinRoom(this.props.match.params.id)
   }
   render() {
     return (
       <div>
         <div>
           <GameChatComponent />
-          <GameBoardComponent fen={this.state.fen} />
+          <GameBoardComponent fen={this.state.fen} roomId={this.props.match.params.id} />
           <GameInfoComponent />
         </div>
         <div>

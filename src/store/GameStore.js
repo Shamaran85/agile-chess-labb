@@ -1,7 +1,9 @@
 import { BehaviorSubject } from 'rxjs';
 import Chess from 'chess.js';
+import io from 'socket.io-client';
+
+const socket = io("http://localhost:1337")
 const defaultState = {
-  message: 'test',
   fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
   history: []
 };
@@ -11,8 +13,16 @@ const subject = new BehaviorSubject(defaultState);
 class GameStore {
   chess = new Chess()
   constructor() {
+    socket.on('move', (move) => this.onMove(move.from, move.to, move.roomId, true))
+
     this.setState({})
   }
+
+  joinRoom(id) {
+    socket.emit('room', { id })
+
+  }
+
   getState() {
     return subject.value;
 
@@ -27,17 +37,16 @@ class GameStore {
     return subject;
   }
 
-  updateDemoMessage(payload) {
-    this.setState(payload)
-  }
   checkTurnColor = () => {
     return this.chess.turn() === 'w' ? 'white' : 'black';
   }
 
-  onMove(from, to) {
+  onMove(from, to, roomId, noEmit = false) {
     const chess = new Chess(this.getState().fen)
-    console.log(chess.fen())
     let newHistory = [...this.getState().history]
+    if (!noEmit) {
+      socket.emit('move', { from, to, roomId })
+    }
 
     if (chess.move({ from, to })) {
       let newState = [{ from: from, to: to, fen: chess.fen() }]

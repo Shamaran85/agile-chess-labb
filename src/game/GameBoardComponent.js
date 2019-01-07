@@ -13,7 +13,7 @@ class GameBoardComponent extends Component {
         GameBoardComponent
         <Chessground
           fen={this.props.fen}
-          onMove={(from, to) => gameStore.onMove(from, to)}
+          onMove={(from, to) => gameStore.onMove(from, to, this.props.roomId)}
           turnColor={gameStore.checkTurnColor()} />
       </div>
     );
