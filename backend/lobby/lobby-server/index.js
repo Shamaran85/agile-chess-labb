@@ -99,15 +99,15 @@ function getCurrentUserListAndEmit(socket, dbo, userArgs) {
 function getCurrentEventListAndEmit(socket, dbo, eventArgs) {
     try {
         dbo.collection(eventArgs.collection)
-            .find({}).toArray((err, events) => {
-                if (!err) {
-                    socket.emit(eventArgs.ioEvent, events);
-                } else {
-                    console.error(err);
-                }
-            });
-    } catch (err) {
-        console.error('Error in getCurrentEventListAndEmit');
+        .find({}).toArray((err, events) => {
+            if (!err) {
+                socket.emit(eventArgs.ioEvent, events);
+            } else {
+                console.error(err);
+            }
+        });
+    } catch(err) {
+      console.error('Error in getCurrentEventListAndEmit');
     }
 }
 //------------- END FUNCTIONS ---------------
