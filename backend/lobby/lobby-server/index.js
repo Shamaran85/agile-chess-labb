@@ -34,8 +34,8 @@ io.on('connection', (socket) => {
     });
 
     // Listen for new Chat Messages
-    socket.on("message", function (msg) {
-        io.emit("message", msg);
+    socket.on("chat", function (msg) {
+        io.emit("chat", msg);
     });
 
     // Emit data direct when the client has connected successfully

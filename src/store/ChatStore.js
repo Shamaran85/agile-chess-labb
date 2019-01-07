@@ -16,7 +16,7 @@ const subject = new BehaviorSubject(defaultState);
 
 class ChatStore {
   constructor() {
-    socket.on("message", msg => {
+    socket.on("chat", msg => {
       this.setState({ message: msg });
     });
   }
@@ -31,8 +31,8 @@ class ChatStore {
     return subject;
   }
 
-  message(msg) {
-    socket.emit("message", msg);
+  chat(msg) {
+    socket.emit("chat", msg);
   }
 }
 

@@ -36,7 +36,7 @@ class GameChatComponent extends Component {
     };
 
     if (this.state.chatMessage.length) {
-      ChatStore.message(data);
+      ChatStore.chat(data);
     }
 
     this.setState({ chatMessage: "" });
