@@ -85,4 +85,6 @@ export function storeToLocalStorage(key, data) {
 }
 
 // Export modules
+
 export default new LobbyStore();
+

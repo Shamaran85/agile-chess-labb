@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
-import LobbyStore from '../store/LobbyStore';
+import MainStore from '../store/MainStore';
 
-class LobbySeeksComponent extends Component {
+export class Event extends Component {
     constructor(props) {
         super(props);
         this.state = {
             events: []
         };
     }
-
+    
     componentDidMount() {
         this.mounted = true;
 
-        LobbyStore.getEvents().subscribe((eventList) => {
+        MainStore.getEvents().subscribe((eventList) => {
             console.log('comp-event-mounted', eventList);
             this.handleSetState({ events: eventList });
         });
@@ -20,7 +20,7 @@ class LobbySeeksComponent extends Component {
 
     componentWillUnmount() {
         this.mounted = false;
-        LobbyStore.unsubscribe();
+        MainStore.unsubscribe();
     }
 
     handleSetState = (payload) => {
@@ -33,14 +33,19 @@ class LobbySeeksComponent extends Component {
     }
 
     render() {
-        return (
-            <div>
+        console.log('state', this.state)
+        if (this.state.events.length > 0) {
+            return (
                 <div>
-                    Seeks
+                    <h3>EVENTS:</h3>
+                    
+                    {this.state.events.map((item, index)=>
+                        <p key={index}>{JSON.stringify(item)}</p>
+                    )}
                 </div>
-            </div>
-        );
+            );
+        } else {
+            return null;
+        }
     }
-}
-
-export default LobbySeeksComponent;
+};

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import CreateGameForm from './components/CreateGameForm';
 import LobbyStore from '../store/LobbyStore';
 import { userArgs, eventArgs, socketAPI } from '../config';
@@ -69,17 +70,15 @@ class LobbyCreateGameComponent extends Component {
     this.setState({ show: false });
   };
   toggleRank = i => {
-    //console.log(i)
     if ((i === 0 && this.state.rankOn) || (i === 1 && !this.state.rankOn)) {
       this.setState({ ...this.state, rankOn: !this.state.rankOn });
     }
   };
   handleTimeSlider = value => {
-    //console.log(value)
+    
     this.setState({ ...this.state, time: value * 60 });
   };
   handleRatingRange = value => {
-    //console.log(value)
     this.setState({
       ...this.state,
       ratingLimits: { low: value[0] * 25, high: value[1] * 25 }
@@ -103,10 +102,7 @@ class LobbyCreateGameComponent extends Component {
     })
       .then(response => response.json())
       .then(result => {
-        console.log("userId", result);
-        //this.setState({ insertedUserId: result.insertedId });
         this.createGame(result.insertedId)
-
       })
       .catch(error => console.log(error));
   };
@@ -134,9 +130,7 @@ class LobbyCreateGameComponent extends Component {
     })
       .then(response => response.json())
       .then(result => {
-        console.log("eventId", result);
-        //this.setState({ insertedUserId: result.insertedId });
-
+        
         LobbyStore.storeUserInfoToLocalStorage({
           _id: result.insertedId
         });
@@ -146,23 +140,22 @@ class LobbyCreateGameComponent extends Component {
   handleSubmit = (event, i) => {
     // Check
     event.preventDefault();
-    console.log(i);
     let playerColor = i;
     i === 'wb'
       ? Math.floor(Math.random() * 2) < 1
         ? (playerColor = 'b')
         : (playerColor = 'w')
       : (playerColor = i);
-    console.log(playerColor);
+    
     this.setState({
       ...this.state,
       playerColor: playerColor,
       show: !this.state.show
     });
 
-    console.log(this.state);
+    
     if (Object.keys(this.state.localUserInfo).length > 0) {
-      console.log('localuser', this.state.localUserInfo);
+      
       this.createGame(this.state.localUserInfo._id);
     } else {
       const newUser = {
@@ -171,16 +164,8 @@ class LobbyCreateGameComponent extends Component {
 
       this.createUserAndNewGame(newUser)
     }
-
-    
-
-    /* if(local === null)
-      new userInfo
-    else
-      getCurrentUser */
   };
   render() {
-    console.log('comp-createGame-localUserInfo', this.state.localUserInfo);
     return (
       <div>
         <p onClick={this.showModal}>Create Game</p>
