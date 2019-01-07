@@ -5,8 +5,13 @@ const port = process.env.PORT || 1337;
 
 io.on('connection', (socket) => {
     console.log('connected');
+    socket.on('room', payload => {
+        const { id } = payload;
+        socket.join(+id);
+    })
     socket.on('move', (move) => {
-        io.emit('move', move)
+        console.log("move", +move.roomId);
+        io.to((+move.roomId)).emit('move', move)
     })
 })
 
