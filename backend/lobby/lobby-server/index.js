@@ -53,7 +53,7 @@ io.on("connection", socket => {
     socket.emit("message", { text: "I hear you client" }); // Answer the client
   });
 
-  // Listen for new Chat Messages
+  // Listen for New Chat Messages
   socket.on("message", function(msg) {
     io.emit("message", msg);
   });
