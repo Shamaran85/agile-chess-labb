@@ -1,5 +1,5 @@
 const socketAPI = {
-    address: 'http://aws.vlexikon.com:1600', //MongoDB version 4.1.6
+    address: 'http://localhost:1600', //MongoDB version 4.1.6
     accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBuYW1lIjoiY2hlc3MiLCJpYXQiOjE1NDU5MDYzMTh9.Jkyy-52zyb7K3xJz4-K3Fr2GmM0dHrxjFThoUTmx4t4'
 };
 
