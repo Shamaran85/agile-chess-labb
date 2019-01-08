@@ -1,9 +1,7 @@
 import { BehaviorSubject } from 'rxjs';
 import Chess from 'chess.js';
-/* import io from 'socket.io-client'; */
 import { socket } from '../api/socket.io';
 
-/* const socket = io("http://localhost:1600") */
 const defaultState = {
   fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
   history: []
@@ -58,7 +56,6 @@ class GameStore {
       fen: chess.fen(),
       history: newHistory
     })
-    console.log(this.getState().history);
   }
 
 }
