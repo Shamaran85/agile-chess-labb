@@ -18,7 +18,7 @@ class GameComponent extends Component {
     });
   }
   historyClicked(move) {
-    console.log("Clicked historic", move)
+
   }
   render() {
     return (
@@ -32,7 +32,6 @@ class GameComponent extends Component {
             <PlayerHistoryComponent 
               onClick={(e) => this.historyClicked(e)} 
               history={['e4','e5']} />
-          <PlayerHistoryComponent />
         </div>
         <p>Demo-message:{this.state.message}</p>
       </div>

@@ -1,30 +1,30 @@
 import React, { Component } from 'react';
 import Chess from 'chess.js';
+import GameStore from '../store/GameStore';
 
-/**
- * Takes two arguments
- * @param history - array of historic moves
- *  - ['e4', 'e5', 'd4', 'd5'] etc
- * @param onClick - callback that is executed when historic move is clicked.
- *  - calls callback with move as argument.
- */
 class PlayerHistoryComponent extends Component {
   
+  state = {
+    history: []
+  }
   chess = new Chess();  
+
+
+  componentDidMount() {
+    GameStore.getSubject().subscribe((payload) => {
+      console.log(payload)
+this.setState({
+  history: payload.history
+    });
+  })
+  }
 
   render() {
     
-    this.chess.move("e4")
-console.log(this.chess.history());
+    this.chess.move(history)
 
-//chess.history({ verbose: true });
-/* 
-    chess.move('e4');
-    chess.history();
-    chess.history({ verbose: true }); */
-
-    const history = this.props.history.map((move) => {
-      return (<li key={move} onClick={() => this.props.onClick(move)}>{move}</li>)
+    const history = this.state.history.map((move) => {
+      return (<li key={move} onClick={() => this.props.onClick(move)}>{move.from} / {move.to}</li>)
     })
     return (
       <div>
