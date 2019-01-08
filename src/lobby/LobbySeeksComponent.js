@@ -94,6 +94,8 @@ class LobbySeeksComponent extends Component {
                 return null
             }
 
+            if(user.isSeeking){
+
             return <tr key={index}>
                     <td>{sign}</td>
                     <td><a onClick={(e)=>this.enterGame(e, user)}>{user.creatorId}</a></td>
@@ -102,6 +104,7 @@ class LobbySeeksComponent extends Component {
                     <td>{user.gameType}</td>
                     <td></td>
                 </tr>
+            }
         })
 
     }
