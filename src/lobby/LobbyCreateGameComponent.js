@@ -111,6 +111,7 @@ class LobbyCreateGameComponent extends Component {
     const newGame = {
       creatorId: id,
       gameType: this.state.gameType,
+      isSeeking: this.state.isSeeking,
       timeControl: this.state.timeControl,
       rankOn: this.state.rankOn,
       time: this.state.time,
@@ -151,19 +152,21 @@ class LobbyCreateGameComponent extends Component {
       ...this.state,
       playerColor: playerColor,
       show: !this.state.show
+    }, () => {
+
+      if (Object.keys(this.state.localUserInfo).length > 0) {
+        
+        this.createGame(this.state.localUserInfo._id);
+      } else {
+        const newUser = {
+          name: 'Anonym'
+        };
+  
+        this.createUserAndNewGame(newUser)
+      }
     });
 
     
-    if (Object.keys(this.state.localUserInfo).length > 0) {
-      
-      this.createGame(this.state.localUserInfo._id);
-    } else {
-      const newUser = {
-        name: 'Anonym'
-      };
-
-      this.createUserAndNewGame(newUser)
-    }
   };
   render() {
     return (
