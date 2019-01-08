@@ -77,6 +77,35 @@ class LobbySeeksComponent extends Component {
 
     }
 
+    gameSeeks() {
+
+
+        if(!this.state.events){
+            return null
+        }
+
+        return  this.state.events.map((user, index) => {
+            let sign = '';
+            if(user.playerColor === 'b'){
+                sign = <i class="fas fa-circle"></i>
+            }else if(user.playerColor === 'w'){
+                sign = <i class="far fa-circle"></i>
+            }else {
+                return null
+            }
+
+            return <tr key={index}>
+                    <td>{sign}</td>
+                    <td><a onClick={(e)=>this.enterGame(e, user)}>{user.creatorId}</a></td>
+                    <td>1600</td>
+                    <td>{user.time}</td>
+                    <td>{user.gameType}</td>
+                    <td></td>
+                </tr>
+        })
+
+    }
+
     render() {
 
         return (
@@ -85,24 +114,17 @@ class LobbySeeksComponent extends Component {
                 <table className="seeker-table">
                       <thead>
                             <tr>
+                                <th><i class="fas fa-shield-alt"></i></th>
                                 <th>Name</th>
                                 <th>Rating</th>
                                 <th>Time</th>
                                 <th>Type</th>
+                                <th><i class="fas fa-cog"></i></th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            {this.state.events ?
-                                this.state.events.map((user, index) =>
-                                    <tr key={index}>
-                                        <td><a onClick={(e)=>this.enterGame(e, user)}>{user.creatorId}</a></td>
-                                        <td>1600</td>
-                                        <td>{user.time}</td>
-                                        <td>{user.gameType}</td>
-                                    </tr>
-                                ) : null
-                            }
+                            {this.gameSeeks()}
                         </tbody>
 
                     </table>
