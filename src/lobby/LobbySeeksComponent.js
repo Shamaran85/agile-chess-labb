@@ -65,7 +65,7 @@ class LobbySeeksComponent extends Component {
             })
             .then(() => {
                 console.log('Update ok now')
-                return <Redirect to="/game/:id" />
+                return <Redirect to={`/game/:${event._id}`} />
             })
             .catch(error => console.log(error.message));
 
