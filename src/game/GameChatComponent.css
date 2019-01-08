@@ -1,0 +1,75 @@
+/* Container */
+.chat__container {
+  width: 298px;
+  height: 300px;
+  border: 1px solid #ccc;
+  margin: 0 auto;
+}
+
+/* Title */
+.chat__title {
+  background-color: #ccc;
+  padding: 10px;
+}
+
+.chat__title p {
+  color: #555;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+
+/* Chat Messages  */
+.chat__messages__container {
+  background-color: #eee;
+  height: 233px;
+  overflow-y: scroll;
+}
+
+.chat__messages {
+  list-style-type: none;
+  text-align: left;
+  margin: 0;
+  padding: 10px;
+}
+
+.chat__item {
+  color: #555;
+  margin: 5px 0;
+  font-size: 14px;
+}
+/* Username */
+.chat__text span {
+  font-weight: bold;
+}
+
+/* Chat Message Input Field */
+.msg__input {
+  height: 24px;
+  width: 244px;
+  background-color: #fff;
+  padding: 0 5px;
+  border: none;
+  outline: none;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+.submit__btn {
+  border: none;
+  height: 26px;
+}
+
+/* Scrollbar from w3 */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

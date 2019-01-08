@@ -1,0 +1,25 @@
+{
+  "name": "socketio-mongo-api-server",
+  "version": "1.0.0",
+  "description": "The realtime API - Server",
+  "main": "index.js",
+  "scripts": {
+    "test": "Hello!",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "mongodb",
+    "api",
+    "socket.io",
+    "realtime"
+  ],
+  "author": "Khoi Le",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
+    "mongodb": "^3.1.10",
+    "socket.io": "^2.2.0"
+  }
+}
