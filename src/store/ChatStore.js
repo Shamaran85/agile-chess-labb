@@ -1,8 +1,7 @@
 import { BehaviorSubject } from "rxjs";
 //const Chess = require('chess.js').Chess;
 
-import openSocket from "socket.io-client";
-const socket = openSocket("http://localhost:1600");
+import { socket } from '../api/socket.io';
 
 const defaultState = {
   message: {
