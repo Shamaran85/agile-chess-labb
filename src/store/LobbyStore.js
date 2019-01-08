@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 import { socket } from '../api/socket.io';
-import { eventArgs, socketAPI } from '../config/';
+import { userArgs, eventArgs, socketAPI } from '../config/';
 
 class LobbyStore {
     constructor() {
@@ -12,7 +12,15 @@ class LobbyStore {
         });
 
         retrieveFromLocalStorage('userInfo')
-            .then((data) => this.userInfo.next(data))
+            .then((data) => {
+                if (Object.keys(data).length === 0){
+                    this.createNewUser({
+                        "name": "Anonymous"
+                    });
+                } else {
+                    this.userInfo.next(data)
+                }
+            })
             .catch((err) => console.error(err));
     }
 
@@ -24,6 +32,16 @@ class LobbyStore {
         return this.userInfo;
     }
 
+    /**
+     * Payload structure
+     * @param {*} payload = {
+     *      "_id": "userIdString"
+     * }
+     * 
+     * This function will do 2 tasks:
+     * - store the user ID into localStorage { "_id": "userIdString" } with the key name is "userInfo"
+     * - emit the "userInfo" object to other components via RxJS service
+     */
     storeUserInfoToLocalStorage(payload) {
         storeToLocalStorage('userInfo', payload)
             .then(() => this.userInfo.next(payload))
@@ -32,7 +50,37 @@ class LobbyStore {
         return false;
     }
 
-    
+    /**
+     * Payload structure
+     * @param {*} userInfo = { JSON object }
+     * 
+     * This function will do 2 tasks:
+     * - insert a new user into the database
+     * - call the function storeUserInfoToLocalStorage(insertedUserId)
+     */
+    createNewUser(userInfo = {}) {
+        if (Object.keys(userInfo).length > 0) {
+            const fetchUrl = userArgs.fetchUrl;
+
+            fetch(fetchUrl, {
+                method: 'POST',
+                headers: new Headers({
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + socketAPI.accessToken
+                }),
+                body: JSON.stringify(userInfo)
+            })
+            .then((response) => response.json())
+            .then((result) => {
+                this.storeUserInfoToLocalStorage({
+                    "_id": result.insertedId
+                });
+            })
+            .catch((error) => console.log(error));
+        }
+    }
+
     /**
      * Payload structure
      * @param {*} payload = {
@@ -43,8 +91,8 @@ class LobbyStore {
     updateEvent(payload) {
         const eventId = payload.id;
         const eventContent = payload.content;
-
         const fetchUrl = `${eventArgs.fetchUrl}/${eventId}`;
+
         fetch(fetchUrl, {
             method: 'PUT',
             headers: new Headers({
@@ -54,8 +102,8 @@ class LobbyStore {
             }),
             body: JSON.stringify(eventContent)
         })
-            .then(() => console.log('Event is updated successfully!'))
-            .catch((err) => console.log(err));
+        .then(() => console.log('Event is updated successfully!'))
+        .catch((err) => console.log(err));
     }
 }
 
