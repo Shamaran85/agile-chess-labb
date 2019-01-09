@@ -5,7 +5,7 @@ const { express, server, app, io, MongoClient, jwt, // Import system packages
 
 const cors = require('cors');
 
-const { getUsers, searchUser, insertUser, updateUser, // Import the user route functions
+const { getUsers, searchUser, insertUser, updateUser, checkLoginInfo, checkUserExist, // Import the user route functions
     getEvents, searchEvent, insertEvent, updateEvent // Import the event route functions
 } = require('./routes');
 
@@ -78,6 +78,10 @@ app.get('/events', getEvents);
 app.get('/events/:id', searchEvent);
 app.post('/events', insertEvent);
 app.put('/events/:id', updateEvent);
+
+// Login system
+app.get('/auth', checkLoginInfo);
+app.get('/checkuser', checkUserExist);
 //------------ END OF ROUTE DEFINITION --------------
 
 //--------------- FUNCTIONS -----------------

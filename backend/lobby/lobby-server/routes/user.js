@@ -1,6 +1,6 @@
-const { io, MongoClient, ObjectID, jwt, 
-        privateKey, dbServer, headers, userArgs,
-    } = require('../config');
+const { io, MongoClient, ObjectID, jwt,
+    privateKey, dbServer, headers, userArgs,
+} = require('../config');
 
 const { getAccessToken } = require('./functions');
 
@@ -8,13 +8,13 @@ const { getAccessToken } = require('./functions');
 function getUsers(req, res) {
     const token = getAccessToken(req);
 
-    jwt.verify(token, privateKey, function(err){
-        if(!err){
+    jwt.verify(token, privateKey, function (err) {
+        if (!err) {
             // Token is valid
             MongoClient.connect(dbServer.uri, { useNewUrlParser: true }, (err, client) => {
                 if (!err) {
                     const dbo = client.db(dbServer.database);
-        
+
                     dbo.collection(userArgs.collection)
                         .find({}).toArray((err, results) => {
                             if (!err) {
@@ -25,7 +25,7 @@ function getUsers(req, res) {
                                 res.status(500).end();
                             }
                         });
-        
+
                     client.close();
                 } else {
                     res.status(500)
@@ -45,15 +45,15 @@ function searchUser(req, res) {
     const seekingUserId = req.params.id;
     const token = getAccessToken(req);
 
-    jwt.verify(token, privateKey, function(err){
-        if(!err){
+    jwt.verify(token, privateKey, function (err) {
+        if (!err) {
             // Token is valid
             //  Argument passed in must be a single String of 12 bytes or a string of 24 hex characters
             if (seekingUserId.length === 24) {
                 MongoClient.connect(dbServer.uri, { useNewUrlParser: true }, (err, client) => {
                     if (!err) {
                         const dbo = client.db(dbServer.database);
-        
+
                         dbo.collection(userArgs.collection)
                             .find({ _id: new ObjectID(seekingUserId) })
                             .limit(1)
@@ -66,7 +66,7 @@ function searchUser(req, res) {
                                     res.status(500).end();
                                 }
                             });
-        
+
                         client.close();
                     } else {
                         res.status(500)
@@ -87,14 +87,14 @@ function searchUser(req, res) {
 function insertUser(req, res) {
     const token = getAccessToken(req);
 
-    jwt.verify(token, privateKey, function(err){
-        if(!err){
+    jwt.verify(token, privateKey, function (err) {
+        if (!err) {
             // Token is valid
             MongoClient.connect(dbServer.uri, { useNewUrlParser: true }, (err, client) => {
                 if (!err) {
                     // Create dbo for database
                     const dbo = client.db(dbServer.database);
-        
+
                     // Insert a new user and return the inserted user _id
                     dbo.collection(userArgs.collection)
                         .insertOne({ ...req.body }, function (err, result) {
@@ -106,10 +106,10 @@ function insertUser(req, res) {
                                 res.status(500).end();
                             }
                         });
-        
+
                     // Get the latest user list in database and emit data to all the clients
                     getLastUserListAndEmit(io, dbo, userArgs, res);
-        
+
                     client.close();
                 } else {
                     res.status(500)
@@ -128,14 +128,14 @@ function updateUser(req, res) {
     const seekingObjectId = req.params.id;
     const token = getAccessToken(req);
 
-    jwt.verify(token, privateKey, function(err){
-        if(!err){
+    jwt.verify(token, privateKey, function (err) {
+        if (!err) {
             // Token is valid
             if (seekingObjectId.length === 24) {
                 MongoClient.connect(dbServer.uri, { useNewUrlParser: true }, (err, client) => {
                     if (!err) {
                         const dbo = client.db(dbServer.database);
-        
+
                         dbo.collection(userArgs.collection)
                             .updateOne(
                                 { _id: new ObjectID(seekingObjectId) },
@@ -143,9 +143,9 @@ function updateUser(req, res) {
                             )
                             .then(() => res.set(headers.changeDataHeader).status(200).end())
                             .catch(() => res.status(500).end());
-        
+
                         getLastUserListAndEmit(io, dbo, userArgs, res);
-        
+
                         client.close();
                     } else {
                         res.status(500)
@@ -166,21 +166,118 @@ function updateUser(req, res) {
 function getLastUserListAndEmit(io, dbo, userArgs, res) {
     try {
         dbo.collection(userArgs.collection)
-        .find({}).toArray((err, results) => {
-            if (!err) {
-                io.emit(userArgs.ioEvent, results);
-            } else {
-                res.status(500).end();
-            }
-        });
-    } catch(err) {
+            .find({}).toArray((err, results) => {
+                if (!err) {
+                    io.emit(userArgs.ioEvent, results);
+                } else {
+                    res.status(500).end();
+                }
+            });
+    } catch (err) {
         res.status(500).end();
     }
+}
+
+/**
+ * Check the user login information by their username and password
+ * This route is an one more step to protect the database
+ */
+function checkLoginInfo(req, res) {
+    const seekingInfo = req.body || {};
+
+    // Checking for input data
+    if (Object.keys(seekingInfo).length > 0) {
+        if (seekingInfo.username !== undefined &&
+            seekingInfo.password !== undefined &&
+            seekingInfo.username.length > 0 &&
+            seekingInfo.password.length > 0) {
+
+            queryUserInfo(req, res, { username: seekingInfo.username, password: seekingInfo.password });
+        } else {
+            res.status(500)
+                .json({ status: 'Input data is invalid' });
+        }
+    } else {
+        res.status(500)
+            .json({ status: 'Input data can not null' });
+    }
+}
+
+// Check if a user exists with their information (Ex: username)
+function checkUserExist(req, res) {
+    const seekingInfo = req.body || {};
+
+    // Checking for input data
+    if (Object.keys(seekingInfo).length > 0) {
+        queryUserInfo(req, res, seekingInfo);
+    } else {
+        res.status(500)
+            .json({ status: 'Input data can not null' });
+    }
+}
+
+/**
+ * Query the user information
+ * @param {*} res : httpRequest
+ * @param {*} seekingQuery = { JSON }
+ */
+function queryUserInfo(req, res, seekingQuery) {
+    const token = getAccessToken(req);
+
+    jwt.verify(token, privateKey, function (err) {
+        if (!err) {
+            // Token is valid
+            MongoClient.connect(dbServer.uri, { useNewUrlParser: true }, (err, client) => {
+                if (!err) {
+                    const dbo = client.db(dbServer.database);
+        
+                    dbo.collection(userArgs.collection)
+                        .find(seekingQuery)
+                        .limit(1)
+                        .toArray((err, userInfo) => {
+                            if (!err) {
+                                if (userInfo.length > 0) {
+                                    // The user is matched
+                                    res.set(headers.getHeader)
+                                        .status(200)
+                                        .json({
+                                            status: true,
+                                            message: "The user information is matched",
+                                            _id: userInfo[0]._id
+                                        });
+                                } else {
+                                    // The user is not matched
+                                    res.set(headers.getHeader)
+                                        .status(200)
+                                        .json({
+                                            status: false,
+                                            message: "The user information is not matched"
+                                        });
+                                }
+                            } else {
+                                res.status(500).end();
+                            }
+                        });
+        
+                    client.close();
+                } else {
+                    res.status(500)
+                        .json({ status: 'Can not connect to the database server' });
+                }
+            });
+        } else {
+            // Token is not valid
+            res.status(403)
+                .json({ status: 'Access token is not valid' });
+        }
+    });
 }
 
 module.exports = {
     getUsers,
     searchUser,
     insertUser,
-    updateUser
+    updateUser,
+    checkLoginInfo,
+    checkUserExist
 }
