@@ -88,7 +88,7 @@ app.get('/checkuser', checkUserExist);
 function getCurrentUserListAndEmit(socket, dbo, userArgs) {
     try {
         dbo.collection(userArgs.collection)
-            .find({}).toArray((err, users) => {
+            .find({}, { projection: { password: 0 }}).toArray((err, users) => {
                 if (!err) {
                     socket.emit(userArgs.ioEvent, users);
                 } else {

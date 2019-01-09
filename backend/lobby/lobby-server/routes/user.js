@@ -16,7 +16,7 @@ function getUsers(req, res) {
                     const dbo = client.db(dbServer.database);
 
                     dbo.collection(userArgs.collection)
-                        .find({}).toArray((err, results) => {
+                        .find({}, { projection: { password: 0 }}).toArray((err, results) => {
                             if (!err) {
                                 res.set(headers.getHeader)
                                     .status(200)
@@ -55,7 +55,7 @@ function searchUser(req, res) {
                         const dbo = client.db(dbServer.database);
 
                         dbo.collection(userArgs.collection)
-                            .find({ _id: new ObjectID(seekingUserId) })
+                            .find({ _id: new ObjectID(seekingUserId) }, { projection: { password: 0 }})
                             .limit(1)
                             .toArray((err, userInfo) => {
                                 if (!err) {
@@ -166,7 +166,7 @@ function updateUser(req, res) {
 function getLastUserListAndEmit(io, dbo, userArgs, res) {
     try {
         dbo.collection(userArgs.collection)
-            .find({}).toArray((err, results) => {
+            .find({}, { projection: { password: 0 }}).toArray((err, results) => {
                 if (!err) {
                     io.emit(userArgs.ioEvent, results);
                 } else {
@@ -234,7 +234,7 @@ function queryUserInfo(req, res, seekingQuery) {
                     const dbo = client.db(dbServer.database);
 
                     dbo.collection(userArgs.collection)
-                        .find(seekingQuery)
+                        .find(seekingQuery, { projection: { _id: 1 }})
                         .limit(1)
                         .toArray((err, userInfo) => {
                             if (!err) {
