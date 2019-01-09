@@ -2,7 +2,7 @@ const { io, MongoClient, ObjectID, jwt,
     privateKey, dbServer, headers, userArgs,
 } = require('../config');
 
-const { getAccessToken } = require('./functions');
+const { getAccessToken, checkObject } = require('./functions');
 
 // USING FOR THE USER ROUTES
 function getUsers(req, res) {
@@ -186,7 +186,8 @@ function checkLoginInfo(req, res) {
     const seekingInfo = req.body || {};
 
     // Checking for input data
-    if (Object.keys(seekingInfo).length > 0) {
+    checkObject(seekingInfo)
+    .then(() => {
         if (seekingInfo.username !== undefined &&
             seekingInfo.password !== undefined &&
             seekingInfo.username.length > 0 &&
@@ -197,23 +198,24 @@ function checkLoginInfo(req, res) {
             res.status(500)
                 .json({ status: 'Input data is invalid' });
         }
-    } else {
+    })
+    .catch((err) => {
         res.status(500)
-            .json({ status: 'Input data can not null' });
-    }
+            .json({ status: false, message: err.message });
+    });
 }
 
 // Check if a user exists with their information (Ex: username)
 function checkUserExist(req, res) {
     const seekingInfo = req.body || {};
-
+    
     // Checking for input data
-    if (Object.keys(seekingInfo).length > 0) {
-        queryUserInfo(req, res, seekingInfo);
-    } else {
+    checkObject(seekingInfo)
+    .then(() => queryUserInfo(req, res, seekingInfo))
+    .catch((err) => {
         res.status(500)
-            .json({ status: 'Input data can not null' });
-    }
+            .json({ status: false, message: err.message });
+    });
 }
 
 /**
