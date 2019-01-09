@@ -187,35 +187,35 @@ function checkLoginInfo(req, res) {
 
     // Checking for input data
     checkObject(seekingInfo)
-    .then(() => {
-        if (seekingInfo.username !== undefined &&
-            seekingInfo.password !== undefined &&
-            seekingInfo.username.length > 0 &&
-            seekingInfo.password.length > 0) {
+        .then(() => {
+            if (seekingInfo.username !== undefined &&
+                seekingInfo.password !== undefined &&
+                seekingInfo.username.length > 0 &&
+                seekingInfo.password.length > 0) {
 
-            queryUserInfo(req, res, { username: seekingInfo.username, password: seekingInfo.password });
-        } else {
+                queryUserInfo(req, res, { username: seekingInfo.username, password: seekingInfo.password });
+            } else {
+                res.status(500)
+                    .json({ status: 'Input data is invalid' });
+            }
+        })
+        .catch((err) => {
             res.status(500)
-                .json({ status: 'Input data is invalid' });
-        }
-    })
-    .catch((err) => {
-        res.status(500)
-            .json({ status: false, message: err.message });
-    });
+                .json({ status: false, message: err.message });
+        });
 }
 
 // Check if a user exists with their information (Ex: username)
 function checkUserExist(req, res) {
     const seekingInfo = req.body || {};
-    
+
     // Checking for input data
     checkObject(seekingInfo)
-    .then(() => queryUserInfo(req, res, seekingInfo))
-    .catch((err) => {
-        res.status(500)
-            .json({ status: false, message: err.message });
-    });
+        .then(() => queryUserInfo(req, res, seekingInfo))
+        .catch((err) => {
+            res.status(500)
+                .json({ status: false, message: err.message });
+        });
 }
 
 /**
@@ -232,7 +232,7 @@ function queryUserInfo(req, res, seekingQuery) {
             MongoClient.connect(dbServer.uri, { useNewUrlParser: true }, (err, client) => {
                 if (!err) {
                     const dbo = client.db(dbServer.database);
-        
+
                     dbo.collection(userArgs.collection)
                         .find(seekingQuery)
                         .limit(1)
@@ -260,7 +260,7 @@ function queryUserInfo(req, res, seekingQuery) {
                                 res.status(500).end();
                             }
                         });
-        
+
                     client.close();
                 } else {
                     res.status(500)
