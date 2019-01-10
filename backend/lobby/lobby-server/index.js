@@ -38,6 +38,15 @@ io.on('connection', (socket) => {
         io.emit("chat", msg);
     });
 
+    socket.on('room', payload => {
+        const { id } = payload;
+        socket.join(+id);
+    })
+    socket.on('move', (move) => {
+        console.log("move", +move.roomId);
+        io.to((+move.roomId)).emit('move', move)
+    })
+
     // Emit data direct when the client has connected successfully
     MongoClient.connect(dbServer.uri, { useNewUrlParser: true }, (err, client) => {
         if (!err) {
@@ -99,15 +108,15 @@ function getCurrentUserListAndEmit(socket, dbo, userArgs) {
 function getCurrentEventListAndEmit(socket, dbo, eventArgs) {
     try {
         dbo.collection(eventArgs.collection)
-        .find({}).toArray((err, events) => {
-            if (!err) {
-                socket.emit(eventArgs.ioEvent, events);
-            } else {
-                console.error(err);
-            }
-        });
-    } catch(err) {
-      console.error('Error in getCurrentEventListAndEmit');
+            .find({}).toArray((err, events) => {
+                if (!err) {
+                    socket.emit(eventArgs.ioEvent, events);
+                } else {
+                    console.error(err);
+                }
+            });
+    } catch (err) {
+        console.error('Error in getCurrentEventListAndEmit');
     }
 }
 //------------- END FUNCTIONS ---------------
