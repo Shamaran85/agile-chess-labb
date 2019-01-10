@@ -5,6 +5,8 @@ const { express, server, app, io, MongoClient, jwt, // Import system packages
 
 const cors = require('cors');
 
+const { trackTime, updateTime, getTime } = require('./helpers/track_time');
+
 const { getUsers, searchUser, insertUser, updateUser, // Import the user route functions
     getEvents, searchEvent, insertEvent, updateEvent // Import the event route functions
 } = require('./routes');
@@ -40,11 +42,14 @@ io.on('connection', (socket) => {
 
     socket.on('room', payload => {
         const { id } = payload;
+        trackTime(id);
         socket.join(+id);
     })
     socket.on('move', (move) => {
         console.log("move", +move.roomId);
-        io.to((+move.roomId)).emit('move', move)
+        updateTime(move.roomId);
+        const time = getTime(move.roomId);
+        io.to((+move.roomId)).emit('move', { move, time })
     })
 
     // Emit data direct when the client has connected successfully

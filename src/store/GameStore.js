@@ -4,7 +4,8 @@ import { socket } from '../api/socket.io';
 
 const defaultState = {
   fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
-  history: []
+  history: [],
+  time: {},
 };
 
 const subject = new BehaviorSubject(defaultState);
@@ -12,7 +13,12 @@ const subject = new BehaviorSubject(defaultState);
 class GameStore {
   chess = new Chess()
   constructor() {
-    socket.on('move', (move) => this.onMove(move.from, move.to, move.roomId, true))
+    socket.on('move', (payload) => { 
+      console.log(payload);
+      const { move, time } = payload;
+      this.onMove(move.from, move.to, move.roomId, true)
+      this.updateTime(time)
+    })
 
     this.setState({})
   }
@@ -40,6 +46,11 @@ class GameStore {
     return this.chess.turn() === 'w' ? 'white' : 'black';
   }
 
+  updateTime(time) {
+    this.setState({
+      time
+    });
+  }
   onMove(from, to, roomId, noEmit = false) {
     const chess = new Chess(this.getState().fen)
     let newHistory = [...this.getState().history]
