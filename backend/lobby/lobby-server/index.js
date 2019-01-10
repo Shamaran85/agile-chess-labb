@@ -95,8 +95,8 @@ app.post('/events', insertEvent);
 app.put('/events/:id', updateEvent);
 
 // Login system
-app.get('/auth', checkLoginInfo);
-app.get('/checkuser', checkUserExist);
+app.post('/auth', checkLoginInfo);
+app.post('/checkuser', checkUserExist);
 //------------ END OF ROUTE DEFINITION --------------
 
 //--------------- FUNCTIONS -----------------

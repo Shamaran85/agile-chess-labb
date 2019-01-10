@@ -5,7 +5,7 @@ Server side
 * Nodejs
 * Expressjs
 * MongoDB version 4
-* Socker.io
+* Socket.io
 * JWT
 
 Hosting:
@@ -22,10 +22,15 @@ Hosting:
 
 |Entry point|Supported method|Description|
 |---|---|---|
+|__User__|
 |`/users`|GET, POST|Get the user list or insert a new user.|
 |`/users/:id`|GET, PUT|Get or edit the specific user information by id.|
+|__Event - Game__|
 |`/events`|GET, POST|Get the event list or insert a new event.|
 |`/events/:id`|GET, PUT|Get or edit the specific event information by its id.|
+|__Login system__|
+|`/auth`|POST||
+|`/checkuser`|POST||
 
 * The realtime data are emited whenever you make a change in database via these events:
 	* `userList` - It returns the current user list.
