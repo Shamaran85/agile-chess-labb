@@ -5,7 +5,7 @@ Server side
 * Nodejs
 * Expressjs
 * MongoDB version 4
-* Socker.io
+* Socket.io
 * JWT
 
 Hosting:
