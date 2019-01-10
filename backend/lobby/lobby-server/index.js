@@ -19,7 +19,22 @@ app.use(cors());// Using CORS
 app.use(express.json()); // Using for POST - Getting body.data
 
 // ---------- CONNECTION CONTROL -----------
-io.on('connection', (socket) => {
+io.use((socket, next) => {
+    // Connection authentication checking
+    const handshake = socket.handshake;
+
+    if (handshake.query && handshake.query.token) {
+        const clientAccessToken = handshake.query.token;
+        jwt.verify(clientAccessToken, privateKey, (err, decoded) => {
+            if (err) return next(new Error('Authentication error'));
+            socket.decoded = decoded;
+            next();
+        });
+    } else {
+        next(new Error('Authentication error'));
+    }
+}).on('connection', (socket) => {
+    // Authenticated connection tasks are here
     console.log('A user is connected');
 
     // Check if the connection is broken from the client
@@ -88,7 +103,7 @@ app.get('/checkuser', checkUserExist);
 function getCurrentUserListAndEmit(socket, dbo, userArgs) {
     try {
         dbo.collection(userArgs.collection)
-            .find({}, { projection: { password: 0 }}).toArray((err, users) => {
+            .find({}, { projection: { password: 0 } }).toArray((err, users) => {
                 if (!err) {
                     socket.emit(userArgs.ioEvent, users);
                 } else {
@@ -103,15 +118,15 @@ function getCurrentUserListAndEmit(socket, dbo, userArgs) {
 function getCurrentEventListAndEmit(socket, dbo, eventArgs) {
     try {
         dbo.collection(eventArgs.collection)
-        .find({}).toArray((err, events) => {
-            if (!err) {
-                socket.emit(eventArgs.ioEvent, events);
-            } else {
-                console.error(err);
-            }
-        });
-    } catch(err) {
-      console.error('Error in getCurrentEventListAndEmit');
+            .find({}).toArray((err, events) => {
+                if (!err) {
+                    socket.emit(eventArgs.ioEvent, events);
+                } else {
+                    console.error(err);
+                }
+            });
+    } catch (err) {
+        console.error('Error in getCurrentEventListAndEmit');
     }
 }
 //------------- END FUNCTIONS ---------------
