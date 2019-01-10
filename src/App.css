@@ -37,10 +37,8 @@
   float: left;
   background-color: #F4A460;
   color: black;
+  width: 320px;
   
-}
-.gameInfo h1 {
-  margin-bottom: 1em;
 }
 .gameInfo h4 {
   text-align: left;
@@ -54,14 +52,16 @@
 .result-table {
   text-align: left;
   font-size: 9px;
+
 }
 .result-table table, th, td {
-  padding: 5px;
+  padding: 3px;
 }
 .result-table th, td {
   border: 1px solid white;
   border-radius: 3px;
   text-align: center;
+
 }
 .bestof5 {
   text-align: center;

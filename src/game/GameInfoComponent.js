@@ -12,26 +12,51 @@ class GameInfoComponent extends Component {
   constructor(props) {
     super(props);
   }
-matchResult(){
-  var winScore = 1;
-  var loseScore = 0; 
-  if(this.result === 'win') {
-    return (winScore);
-  } else {
-    return (loseScore);
+  toTaltPointPlayer1() {
+    var results = this.props.his.player1.results;
+    var total = 0;
+    for (var i=0; i<results.length; i++){
+      total += results[i];
+    }
+    return total;
   }
-}
+  toTaltPointPlayer2() {
+    var results = this.props.his.player2.results;
+    var total = 0;
+    for (var i=0; i<results.length; i++){
+      total += results[i];
+    }
+    return total;
+  }
 
+  getTdsPlayer1() {
+    var matchResult = this.props.his.player1.results;
+    var tableBodys = matchResult.map((results)=>{
+      return (
+            <td>{results}</td>
+      );
+    });
+    return tableBodys;
+
+  }
+  getTdsPlayer2() {
+    var matchResult = this.props.his.player2.results;
+    var tableBodys = matchResult.map((results)=>{
+      return (
+            <td>{results}</td>
+      );
+    });
+    return tableBodys;
+
+  }
   render() {
     return (
       <div className="gameInfo">
         <h1><FontAwesomeIcon icon="chess-knight" /> Chess.JS</h1>
         <h4><FontAwesomeIcon icon="chess-pawn" /> Game Info: </h4>
         <div className="gameInfoBody">
-            <p><strong>Player Name:</strong> {this.props.userName}</p>
-            <p><strong>Opponent Name:</strong> {this.props.userOpponent}</p>
-            <p><strong>Status: </strong> {this.props.status}</p>
-            <p><strong>Match result:</strong> {this.props.result}</p>
+            <p><strong>Player 1:</strong> {this.props.his.player1.name}</p>
+            <p><strong>Player 2:</strong> {this.props.his.player2.name}</p>
         </div>
         <div className="result-table">
         <h2>Match result history: </h2>
@@ -44,22 +69,17 @@ matchResult(){
                <th>Win/Lose</th>
                <th>Win/Lose</th>
                <th>Win/Lose</th>
+               <th>Wins Totalt</th>
             </tr>
             <tr>
-               <td><strong>Player Name:</strong> {this.props.userName}</td>
-               <td>{this.matchResult}</td>
-               <td>{this.matchResult}</td>
-               <td>{this.matchResult}</td>
-               <td>{this.matchResult}</td>
-               <td>{this.matchResult}</td>
+               <td><strong></strong> {this.props.his.player1.name}</td>
+               {this.getTdsPlayer1()}
+               <td>{this.toTaltPointPlayer1()}</td>
             </tr>
             <tr>
-               <td><strong>Opponent Name</strong> {this.props.userOpponent}</td>
-               <td>{this.matchResult}</td>
-               <td>{this.matchResult}</td>
-               <td>{this.matchResult}</td>
-               <td>{this.matchResult}</td>
-               <td>{this.matchResult}</td>
+               <td><strong></strong> {this.props.his.player2.name}</td>
+               {this.getTdsPlayer2()}
+               <td>{this.toTaltPointPlayer2()}</td>
             </tr>
           </table>
         </div>
