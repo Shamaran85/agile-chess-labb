@@ -29,8 +29,8 @@ Hosting:
 |`/events`|GET, POST|Get the event list or insert a new event.|
 |`/events/:id`|GET, PUT|Get or edit the specific event information by its id.|
 |__Login system__|
-|`/auth`|POST||
-|`/checkuser`|POST||
+|[`/auth`](HOWTO.md#route---auth)|POST||
+|[`/checkuser`](HOWTO.md#route---checkuser)|POST||
 
 * The realtime data are emited whenever you make a change in database via these events:
 	* `userList` - It returns the current user list.
