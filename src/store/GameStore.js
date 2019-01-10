@@ -14,7 +14,6 @@ class GameStore {
   chess = new Chess()
   constructor() {
     socket.on('move', (payload) => { 
-      console.log(payload);
       const { move, time } = payload;
       this.onMove(move.from, move.to, move.roomId, true)
       this.updateTime(time)

@@ -8,16 +8,6 @@ import PlayerHistoryComponent from './PlayerHistoryComponent';
 
 import gameStore from '../store/GameStore';
 
-const his = {
-  player1: {
-    name: 'Niklas',
-    results: [0,1,1,0,1,0]
-  },
-  player2: {
-    name: 'Viktor',
-    results: [1,0,0,1,0,1]
-  }
-};
 class GameComponent extends Component {
   constructor(props) {
     super(props);
