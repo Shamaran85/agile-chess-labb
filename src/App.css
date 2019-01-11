@@ -37,7 +37,24 @@
   float: left;
   background-color: #F4A460;
   color: black;
-  width: 320px;
+  width: 380px;
+  box-sizing: border-box;
+  font-family: 'Courier New', Courier, monospace;
+
+}
+.gameInfo h1 {
+
+  color: white;
+
+}
+table {
+  border-collapse: collapse;
+  padding: 3px;
+  box-shadow: 0px 0px 20px rgba(0,0,0,0.10),
+  0px 10px 20px rgba(0,0,0,0.05),
+  0px 20px 20px rgba(0,0,0,0.05),
+  0px 30px 20px rgba(0,0,0,0.05);
+  box-sizing: border-box;
   
 }
 .gameInfo h4 {
@@ -54,14 +71,17 @@
   font-size: 9px;
 
 }
-.result-table table, th, td {
+
+th {
+  background: black;
+  color: white;
+  text-transform: uppercase;
   padding: 3px;
 }
 .result-table th, td {
   border: 1px solid white;
   border-radius: 3px;
   text-align: center;
-
 }
 .bestof5 {
   text-align: center;

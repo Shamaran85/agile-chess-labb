@@ -55,8 +55,14 @@ class GameInfoComponent extends Component {
         <h1><FontAwesomeIcon icon="chess-knight" /> Chess.JS</h1>
         <h4><FontAwesomeIcon icon="chess-pawn" /> Game Info: </h4>
         <div className="gameInfoBody">
-            <p><strong>Player 1:</strong> {this.props.his.player1.name}</p>
-            <p><strong>Player 2:</strong> {this.props.his.player2.name}</p>
+        <div>
+          <p><strong>ID: </strong> {this.props.his.player1.id}</p>
+          <p><strong>Player 1:</strong> {this.props.his.player1.name}</p>
+        </div>
+        <div>
+          <p><strong>ID: </strong> {this.props.his.player2.id}</p>
+          <p><strong>Player 1:</strong> {this.props.his.player2.name}</p>
+        </div>
         </div>
         <div className="result-table">
         <h2>Match result history: </h2>
