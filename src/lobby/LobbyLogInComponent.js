@@ -124,6 +124,29 @@ class LobbyLoginComponent extends Component {
     
   }
   createUser() {
+    const fetchUrl = userArgs.fetchUrl;
+    fetch(fetchUrl, {
+      method: 'POST',
+      body: JSON.stringify(
+        {
+          username: this.state.userName.value,
+          password: this.state.password.value
+        }
+      ),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + socketAPI.accessToken
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      LobbyStore.storeUserInfoToLocalStorage(data.insertedId)
+      this.setState({ ...this.state, isLoggedIn: true})
+      this.hideAuth();
+    })
+    .catch(error => console.log(error));
+  }
+  checkIfUserExist() {
     const fetchUrl = userArgs.checkExistUrl;
     fetch(fetchUrl, {
       method: 'POST',
@@ -140,27 +163,7 @@ class LobbyLoginComponent extends Component {
     .then(response => response.json())
     .then(data => {
       if (data && data.status === false) {
-        const fetchUrl = userArgs.fetchUrl;
-        fetch(fetchUrl, {
-          method: 'POST',
-          body: JSON.stringify(
-            {
-              username: this.state.userName.value,
-              password: this.state.password.value
-            }
-          ),
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + socketAPI.accessToken
-          }
-        })
-        .then(response => response.json())
-        .then(data => {
-          LobbyStore.storeUserInfoToLocalStorage(data.insertedId)
-          this.setState({ ...this.state, isLoggedIn: true})
-          this.hideAuth();
-        })
-        .catch(error => console.log(error));
+        this.createUser()
         
       } else {
         this.setState({...this.state, errorMessage: 'username already in use'})
@@ -176,7 +179,7 @@ class LobbyLoginComponent extends Component {
       if (this.state.isRegistered) {
         this.loginUser()
       } else {
-        this.createUser()
+        this.checkIfUserExist()
       }
     }
   }
