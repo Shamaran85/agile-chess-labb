@@ -1,4 +1,3 @@
-
 import { BehaviorSubject } from 'rxjs';
 import Chess from 'chess.js';
 import { socket } from '../api/socket.io';
@@ -14,15 +13,13 @@ const defaultState = {
 const subject = new BehaviorSubject(defaultState);
 
 class GameStore {
-
   chess = new Chess()
+
   constructor() {
     socket.on('move', (move) => this.onMove(move.from, move.to, move.roomId, true))
 
     this.setState({})
-
   }
-
   joinRoom(id) {
     socket.emit('room', { id })
 
@@ -48,25 +45,35 @@ class GameStore {
   }
 
   checkTurnColor = () => {
-    return this.chess.turn() === 'w' ? 'white' : 'black';
-  }
+    const chess = new Chess(this.getState().fen);
+    return chess.turn() === "w" ? "white" : "black";
+  };
 
   onMove(from, to, roomId, noEmit = false) {
-    const chess = new Chess(this.getState().fen)
-    let newHistory = [...this.getState().history]
+    const chess = new Chess(this.getState().fen);
+    let newHistory = [...this.getState().history];
     if (!noEmit) {
-      socket.emit('move', { from, to, roomId })
+      socket.emit("move", { from, to, roomId });
     }
-
     if (chess.move({ from, to })) {
-      let newState = [{ from: from, to: to, fen: chess.fen() }]
-      newHistory = newHistory.concat(newState)
-    }
+      let newState = [{ from: from, to: to, fen: chess.fen() }];
 
+      newHistory = newHistory.concat(newState);
+    }
     this.setState({
       fen: chess.fen(),
       history: newHistory
-    })
+    });
+  }
+
+  isChecked() {
+    const chess = new Chess(this.getState().fen);
+    return chess.in_check();
+  }
+
+  isCheckmate() {
+    const chess = new Chess(this.getState().fen);
+    return chess.in_checkmate();
   }
 
 }
