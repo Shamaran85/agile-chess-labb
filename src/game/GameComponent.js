@@ -18,9 +18,6 @@ class GameComponent extends Component {
     });
     gameStore.joinRoom(this.props.match.params.id)
   }
-  historyClicked(move) {
-
-  }
   render() {
     return (
       <div>
@@ -31,9 +28,7 @@ class GameComponent extends Component {
         </div>
         <div>
 
-            <PlayerHistoryComponent 
-              onClick={(e) => this.historyClicked(e)} 
-              history={['e4','e5']} />
+            <PlayerHistoryComponent />
         </div>
         <p>Demo-message:{this.state.message}</p>
       </div>
