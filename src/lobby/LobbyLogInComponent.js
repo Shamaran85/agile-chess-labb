@@ -75,7 +75,6 @@ class LobbyLoginComponent extends Component {
         value: event.target.value,
         valid: this.checkValidity(event.target.value, {required: true, minLength: 3, maxLength: 15}),
         touched: true,
-        showError: true
       }
     })
   }
@@ -87,7 +86,6 @@ class LobbyLoginComponent extends Component {
         value: event.target.value,
         valid: this.checkValidity(event.target.value, {required: true, minLength: 6, maxLength: 20}),
         touched: true,
-        showError: true
       }
     })
     
@@ -144,7 +142,7 @@ class LobbyLoginComponent extends Component {
       this.setState({ ...this.state, isLoggedIn: true})
       this.hideAuth();
     })
-    .catch(error => console.log(error));
+    .catch(error => console.log(error))
   }
   checkIfUserExist() {
     const fetchUrl = userArgs.checkExistUrl;
