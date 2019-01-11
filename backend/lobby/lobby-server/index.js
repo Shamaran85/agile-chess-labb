@@ -9,6 +9,8 @@ const { getUsers, searchUser, insertUser, updateUser, checkLoginInfo, checkUserE
     getEvents, searchEvent, insertEvent, updateEvent // Import the event route functions
 } = require('./routes');
 
+const mw = require('./middleware');
+
 // Server listening port
 server.listen(webServer.port, () => {
     console.log(`Express server with Socket.io is listening on port ${webServer.port}!`);
@@ -69,13 +71,21 @@ io.use((socket, next) => {
 })
 //--------- END CONNECTION CONTROL ---------
 
-// ---------- BEGIN OF ROUTE DEFINITION -------------
+
 // App route
-/* app.get('/', function (req, res, next) {
+app.get('/', function (req, res, next) {
     res.status(200)
         .sendFile(__dirname + webServer.rootDir + '/' + webServer.defaultPage);
-}); */
+});
 
+
+// ------ AUTHENTICATION ------
+// Using checkAuth middleware
+app.use(mw({ mwid: 'checkAuth' }));
+// ------ END AUTHENTICATION ------
+
+
+// ---------- BEGIN OF ROUTE DEFINITION -------------
 // Token route
 /* app.get('/token', function(req, res){
     var token = jwt.sign({ appname: "chess" }, privateKey);
@@ -130,3 +140,6 @@ function getCurrentEventListAndEmit(socket, dbo, eventArgs) {
     }
 }
 //------------- END FUNCTIONS ---------------
+
+// Using errorHandling middleware
+app.use(mw({ mwid: 'errorHandling' }));
