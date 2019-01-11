@@ -26,6 +26,7 @@ const authForm = (props) => {
             </div>
             <div className='AF-inputGroup'>
               <button onClick={props.submitForm}>{props.login ? 'Logga in' : 'Registrera dig'}</button>
+              <span className='AF-errorMessage'>{props.errorMessage}</span>
             </div>
             <span className='AF-span' onClick={props.switchAuth}>{props.login ? 'ny användare?' : 'har du redan ett konto?'}</span>
           </form>

@@ -1,23 +1,27 @@
 import React, { Component } from 'react';
 import AuthForm from './components/AuthForm'
+import LobbyStore from '../store/LobbyStore';
+
+import { userArgs, socketAPI } from '../config';
+
 class LobbyLoginComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       show: false,
+      isLoggedIn: false,
+      errorMessage: '',
       isRegistered: true,
       isValid: false,
       userName: {
         value: '',
         valid: false,
         touched: false,
-        showError: false
       },
       password: {
         value: '',
         valid: false,
         touched: false,
-        showError: false
       }
     }
   }
@@ -39,7 +43,7 @@ class LobbyLoginComponent extends Component {
     return isValid;
   }
   toggleAuthType = () => {
-    this.setState({ isRegistered: !this.state.isRegistered })
+    this.setState({ isRegistered: !this.state.isRegistered, errorMessage: '' })
   }
   showAuth = () => {
     this.setState(
@@ -61,12 +65,12 @@ class LobbyLoginComponent extends Component {
     )
   }
   hideAuth = () => {
-    this.setState({ ...this.state, show: false})
+    this.setState({ ...this.state, show: false, errorMessage: '' })
   }
   handleNameInput = event => {
-    console.log(event.target.value)
     this.setState({
       ...this.state,
+      errorMessage: '',
       userName: {
         value: event.target.value,
         valid: this.checkValidity(event.target.value, {required: true, minLength: 3, maxLength: 15}),
@@ -76,9 +80,9 @@ class LobbyLoginComponent extends Component {
     })
   }
   handlePassInput = event => {
-    console.log(event.target.value)
     this.setState({
       ...this.state,
+      errorMessage: '',
       password: {
         value: event.target.value,
         valid: this.checkValidity(event.target.value, {required: true, minLength: 6, maxLength: 20}),
@@ -88,11 +92,92 @@ class LobbyLoginComponent extends Component {
     })
     
   }
+  logOut = () => {
+    this.setState({...this.state, isLoggedIn: false})
+  }
+  loginUser() {
+    const fetchUrl = userArgs.authUrl;
+    fetch(fetchUrl, {
+      method: 'POST',
+      body: JSON.stringify({
+        username: this.state.userName.value,
+        password: this.state.password.value
+      }
+      ),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + socketAPI.accessToken
+      }
+    })
+    .then(response => response.json())
+    .then((data) => {
+      if (data.status) {
+        LobbyStore.storeUserInfoToLocalStorage(data._id)
+        this.setState({ ...this.state, isLoggedIn: true})
+        this.hideAuth();
+      } else {
+        this.setState({...this.state, errorMessage: data.message})
+      }
+
+    })
+    .catch(error => console.log(error));
+    
+  }
+  createUser() {
+    const fetchUrl = userArgs.checkExistUrl;
+    fetch(fetchUrl, {
+      method: 'POST',
+      body: JSON.stringify(
+        {
+          username: this.state.userName.value
+        }
+      ),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + socketAPI.accessToken
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data && data.status === false) {
+        const fetchUrl = userArgs.fetchUrl;
+        fetch(fetchUrl, {
+          method: 'POST',
+          body: JSON.stringify(
+            {
+              username: this.state.userName.value,
+              password: this.state.password.value
+            }
+          ),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + socketAPI.accessToken
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          LobbyStore.storeUserInfoToLocalStorage(data.insertedId)
+          this.setState({ ...this.state, isLoggedIn: true})
+          this.hideAuth();
+        })
+        .catch(error => console.log(error));
+        
+      } else {
+        this.setState({...this.state, errorMessage: 'username already in use'})
+      }
+    })
+    .catch(error => console.log(error));
+    
+  }
   handleSubmit = event => {
     event.preventDefault();
     
     if (this.state.userName.valid && this.state.password.valid) {
-      this.hideAuth();
+      if (this.state.isRegistered) {
+        this.loginUser()
+      } else {
+        this.createUser()
+      }
     }
   }
   render() {
@@ -104,9 +189,9 @@ class LobbyLoginComponent extends Component {
     if (!this.state.password.valid && this.state.password.touched) {
       showPassError = true;
     }
-    return (
+    let displayAuth = (
       <div>
-        <p onClick={this.showAuth}>Login</p>
+        <p onClick={this.showAuth}>Logga in</p>
         <AuthForm
           show={this.state.show}
           login={this.state.isRegistered}
@@ -119,11 +204,20 @@ class LobbyLoginComponent extends Component {
           password={this.state.password.value}
           showUserError={showUserError}
           showPassError={showPassError}
+          errorMessage={this.state.errorMessage}
         />
-        
+      </div>
+    )
+    if (this.state.isLoggedIn) {
+      displayAuth = <p onClick={this.logOut}>Logga ut</p>;
+    }
+    return (
+      <div>
+         {displayAuth}
       </div>
     )
   }
 }
 
 export default LobbyLoginComponent;
+
