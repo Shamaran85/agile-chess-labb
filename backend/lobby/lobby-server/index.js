@@ -3,6 +3,8 @@ const { express, server, app, io, MongoClient, jwt, // Import system packages
     userArgs, eventArgs, privateKey // Import custom arguments
 } = require('./config');
 
+const gameMove = require('./game-logic/move');
+
 const cors = require('cors');
 
 const { getUsers, searchUser, insertUser, updateUser, // Import the user route functions
@@ -39,11 +41,15 @@ io.on('connection', (socket) => {
     });
 
     socket.on('room', payload => {
+        console.log(payload);
         const { id } = payload;
+
         socket.join(+id);
     })
     socket.on('move', (move) => {
         console.log("move", +move.roomId);
+        console.log(move);
+        gameMove.getRoom(move.roomId, move);
         io.to((+move.roomId)).emit('move', move)
     })
 
