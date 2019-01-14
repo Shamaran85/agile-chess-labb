@@ -49,7 +49,7 @@ class GameChatComponent extends Component {
       return (
         <li key={index} className="chat__item">
           <div className="chat__text">
-            <span>{data.userName}</span> {data.userMessage}
+            <span>{data.userName}:</span> {data.userMessage}
           </div>
         </li>
       );
