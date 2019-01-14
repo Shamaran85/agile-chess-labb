@@ -47,8 +47,6 @@ io.on('connection', (socket) => {
         socket.join(+id);
     })
     socket.on('move', (move) => {
-        console.log("move", +move.roomId);
-        console.log(move);
         gameMove.getRoom(move.roomId, move);
         io.to((+move.roomId)).emit('move', move)
     })
