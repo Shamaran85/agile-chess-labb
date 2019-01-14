@@ -12,7 +12,10 @@ class GameInfoComponent extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      resultOfplayer1: [1,0,1,1,1,1,1],
+      resultOfplayer2: [0,1,0,0,0,0,0],
+    };
   }
 
   componentDidMount() {
@@ -23,7 +26,7 @@ class GameInfoComponent extends Component {
               });
   }
   toTaltPointPlayer1() {
-    var results = this.props.his.player1.results;
+    var results = this.state.resultOfplayer1;
     var total = 0;
     for (var i=0; i<results.length; i++){
       total += results[i];
@@ -31,7 +34,7 @@ class GameInfoComponent extends Component {
     return total;
   }
   toTaltPointPlayer2() {
-    var results = this.props.his.player2.results;
+    var results = this.state.resultOfplayer2;
     var total = 0;
     for (var i=0; i<results.length; i++){
       total += results[i];
@@ -39,26 +42,6 @@ class GameInfoComponent extends Component {
     return total;
   }
 
-  getTdsPlayer1() {
-    var matchResult = this.props.his.player1.results;
-    var tableBodys = matchResult.map((results)=>{
-      return (
-            <td>{results}</td>
-      );
-    });
-    return tableBodys;
-
-  }
-  getTdsPlayer2() {
-    var matchResult = this.props.his.player2.results;
-    var tableBodys = matchResult.map((results)=>{
-      return (
-            <td>{results}</td>
-      );
-    });
-    return tableBodys;
-
-  }
   render() {
     return (
       <div className="gameInfo">
@@ -70,34 +53,35 @@ class GameInfoComponent extends Component {
           <p><strong>Player 1: Anonymous</strong> </p>
         </div>
         <div>
-          <p><strong>ID: </strong> </p>
+          <p><strong>ID: {this.state._id}</strong> </p>
           <p><strong>Player 2:Anonymous</strong> </p>
         </div>
         </div>
         <div className="result-table">
         <h2>Match result history: </h2>
-        <h3 className="bestof5">BEST OF 5 <FontAwesomeIcon icon="trophy" /> </h3>
+        <h3 className="bestof5">Winner of Match Record <FontAwesomeIcon icon="trophy" /> </h3>
           
         <table>
             <tr>
                <th>The Player</th>
-               <th>Win/Lose</th>
-               <th>Win/Lose</th>
-               <th>Win/Lose</th>
-               <th>Win/Lose</th>
-               <th>Win/Lose</th>
-               <th>Wins Totalt</th>
             </tr>
             <tr>
-               <td><strong>Player 1</strong> </td>
-               {this.getTdsPlayer1()}
-               <td>{this.toTaltPointPlayer1()}</td>
+              <td>Player 1</td>
+              {this.state.resultOfplayer1.map(point => (
+                <td key={point}>{point}</td>
+              ))}
+              <td><strong>Totalt point</strong></td>
+              <td>{this.toTaltPointPlayer1()}</td>
             </tr>
             <tr>
-               <td><strong>Player 2</strong> </td>
-               {this.getTdsPlayer2()}
-               <td>{this.toTaltPointPlayer2()}</td>
+            <td>Player 2</td>
+            {this.state.resultOfplayer2.map(point => (
+                <td key={point}>{point}</td>
+              ))}
+              <td><strong>Totalt point</strong></td>
+              <td>{this.toTaltPointPlayer2()}</td>
             </tr>
+
           </table>
         </div>
       </div>

@@ -6,14 +6,6 @@ import GameChatComponent from './GameChatComponent';
 import PlayerHistoryComponent from './PlayerHistoryComponent';
 
 import gameStore from '../store/GameStore';
-const his = {
-  player1: {
-    results: [0,1,1,0,1],
-},
-player2: {
-  results: [1,0,0,1,0]
-}
-};
 class GameComponent extends Component {
   constructor(props) {
     super(props);
@@ -34,7 +26,7 @@ class GameComponent extends Component {
         <div>
           <GameChatComponent />
           <GameBoardComponent fen={this.state.fen} roomId={this.props.match.params.id} />
-          <GameInfoComponent his={his} />
+          <GameInfoComponent />
         </div>
         <div>
 
