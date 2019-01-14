@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import GameComponent from './GameComponent';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import '../App.css';
+import LobbyStore from '../store/LobbyStore';
 
 //User1 it's you who is playing.
 //User2 is your opponent 
@@ -11,6 +12,13 @@ class GameInfoComponent extends Component {
 
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+            // Stream data from RxJS service
+            LobbyStore.getLocalUserInfo().subscribe(data => {
+                console.log(data)
+              });
   }
   toTaltPointPlayer1() {
     var results = this.props.his.player1.results;
@@ -49,6 +57,15 @@ class GameInfoComponent extends Component {
     return tableBodys;
 
   }
+  ShowId () {
+
+  }
+
+  getLocalUserInfo() {
+    return this.userInfo;
+    
+}
+
   render() {
     return (
       <div className="gameInfo">
