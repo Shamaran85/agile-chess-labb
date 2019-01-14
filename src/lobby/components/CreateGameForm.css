@@ -1,0 +1,168 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+.main {
+  width: 400px;
+  margin: 20px auto;
+  color: #707070;
+  position:fixed;
+  background: white;
+  text-align: left;
+  height: auto;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  box-shadow: 0 0px 40px 5px #252525;
+  
+}
+.main h2 {
+  font-size: 1.4em;
+  text-align: center;
+}
+
+.cross {
+  border-radius: 50%;
+  position: fixed;
+  top: -12px;
+  right: -12px;
+  padding: 5px;
+  font-size: 16px;
+  font-weight: bolder;
+  color: #8c8888;
+  background-color:white;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 32px;
+}
+.cross:hover {
+  cursor: pointer;
+  background-color: #d8d8d8;
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
+
+.variant, .timeControl {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  padding: 15px;
+  /* margin-bottom: 20px; */
+}
+.variant label, .timeControl label {
+  margin-right: 10px;
+  width: 140px;
+  font-size: 12px;
+  font-weight: bolder;
+  text-align: right;
+}
+.timeControl {
+  background-color: #eee;
+}
+
+#selectVariant, #selectTimeControl {
+  font-size: 16px;
+  font-weight: bolder;
+}
+
+.sliderContainer {
+  padding: 20px 30px;
+  background-color: #eee;
+  
+}
+
+.labelContainer {
+  margin-bottom: 5px;
+  margin-top: -10px 
+}
+
+.switchRankContainer {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  
+}
+.special {
+  background-color: #d85000 !important;
+  color: #fff;
+}
+.switchRank {
+  width: 100px;
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 2px;
+  text-align: center;
+  font-weight: bolder;
+  background-color: #eee;
+}
+.switchRank:hover {
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.submitChoice {
+ text-align: center;
+ margin-bottom: 15px;
+}
+.submitChoice button {
+  margin-right: 10px;
+  border: none;
+  background: #eee;
+}
+.middle {
+  width: 70px;
+}
+
+.rangeContainer {
+  background-color: #eee;
+  padding: 20px 30px;
+  margin-bottom: 20px;
+}
+
+.rc-slider-handle {
+  border-color: rgb(224, 224, 224);
+  border-radius: 1px;
+  height: 28px;
+  width: 28px;
+  margin-top: -9px;
+  background-color: rgb(238, 238, 238);
+}
+.rc-slider-handle:hover {
+  border-color: #9E9E9E;
+}
+.rc-slider-handle:active, .rc-slider-handle:focus {
+  box-shadow: 0 0 5px #484848;
+  border-color: #9E9E9E;
+}
+
+.rc-slider-rail {
+  background-color: rgb(255, 255, 255);
+  height: 12px;
+  border-radius: 1px;
+}
+.rc-slider-track {
+  background-color: rgb(216, 80, 0);
+  height: 10px;
+  border-radius: 1px;
+}
+
+.rangelabelContainer {
+  margin-bottom: 10px;
+}
+
+.submitChoice button:hover {
+  background-color: #b1b0b0;
+  cursor: pointer;
+}

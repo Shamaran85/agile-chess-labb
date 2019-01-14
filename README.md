@@ -1,5 +1,9 @@
 # Agile-chess
 
+## Setup 
+
+Copy src/config/index.js.sample to src/config/index.js
+
 ## Contribute
 
 Use git flow as a workflow,
