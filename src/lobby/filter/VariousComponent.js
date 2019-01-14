@@ -23,26 +23,26 @@ class VariousComponent extends Component {
         </div>
         <div className="various-row2">
 
-        <span className="checkbox-span"><input className="checkbox-input" type="checkbox" id="scales" name="scales"/>
-        <label className="checkbox-label" htmlFor="scales">King of the Hill</label></span>
+        <span className="checkbox-span"><input className="checkbox-input" type="checkbox" id="king" name="king"/>
+        <label className="checkbox-label" htmlFor="king">King of the Hill</label></span>
 
-          <span className="checkbox-span"><input className="checkbox-input" type="checkbox" id="scales" name="scales"/>
-        <label className="checkbox-label" htmlFor="scales">Three-check</label></span>
+          <span className="checkbox-span"><input className="checkbox-input" type="checkbox" id="threeCheck" name="threeCheck"/>
+        <label className="checkbox-label" htmlFor="threeCheck">Three-check</label></span>
 
-          <span className="checkbox-span"><input className="checkbox-input" type="checkbox" id="scales" name="scales"/>
-        <label className="checkbox-label" htmlFor="scales">Antichess</label></span>
+          <span className="checkbox-span"><input className="checkbox-input" type="checkbox" id="antichess" name="antichess"/>
+        <label className="checkbox-label" htmlFor="antichess">Antichess</label></span>
         </div>
 
         <div className="various-row3">
 
-        <span className="checkbox-span"><input className="checkbox-input" type="checkbox" id="scales" name="scales"/>
-        <label className="checkbox-label" htmlFor="scales">Atomic</label></span>
+        <span className="checkbox-span"><input className="checkbox-input" type="checkbox" id="atomic" name="atomic"/>
+        <label className="checkbox-label" htmlFor="atomic">Atomic</label></span>
 
-        <span className="checkbox-span"><input className="checkbox-input" type="checkbox" id="scales" name="scales"/>
-        <label className="checkbox-label" htmlFor="scales">Horde</label></span>
+        <span className="checkbox-span"><input className="checkbox-input" type="checkbox" id="horde" name="horde"/>
+        <label className="checkbox-label" htmlFor="horde">Horde</label></span>
 
-        <span className="checkbox-span"><input className="checkbox-input" type="checkbox" id="scales" name="scales"/>
-        <label className="checkbox-label" htmlFor="scales">Racing Kings</label></span>
+        <span className="checkbox-span"><input className="checkbox-input" type="checkbox" id="racingKings" name="racingKings"/>
+        <label className="checkbox-label" htmlFor="racingKings">Racing Kings</label></span>
           </div>
         </div>
 

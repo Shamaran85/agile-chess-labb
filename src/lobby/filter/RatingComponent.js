@@ -11,6 +11,12 @@ class RatingComponent extends Component {
       value: { min: 800, max: 2900 },
     };
   }
+
+  onChange(value) {
+    this.props.someCallback(value);
+  }
+    this.setState({ value })
+  }
   render() {
     return (
       <div className="RatingComponent">
@@ -19,7 +25,7 @@ class RatingComponent extends Component {
           maxValue={2900}
           minValue={800}
           value={this.state.value}
-          onChange={value => this.setState({ value })} />
+          onChange={this.onChange.bind(this) ] />
 
       </div>
     );

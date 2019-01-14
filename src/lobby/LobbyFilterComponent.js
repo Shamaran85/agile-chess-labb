@@ -9,8 +9,7 @@ class LobbyFilterComponent extends Component {
   render() {
     return (
       <div className="filter-div">
-        filter
-        <VariousComponent/>
+        <VariousComponent />
         <TimeControlComponent/>
         <TypeComponent/>
         <RatingComponent/>

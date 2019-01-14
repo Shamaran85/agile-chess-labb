@@ -34,6 +34,20 @@
   transform: none;
 }
 
+.input-range__label-container {
+  left: -50%;
+  position: relative;
+}
+
+.input-range__label--min .input-range__label-container {
+  display: none;
+}
+
+.input-range__label--max .input-range__label-container {
+  left: 50%;
+  display: none;
+}
+
 .input-range__track {
   background: #eeeeee;
   border-radius: 0.3rem;
