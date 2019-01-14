@@ -5,6 +5,7 @@ import TimeControlComponent from "./filter/TimeControlComponent";
 import TypeComponent from "./filter/TypeComponent";
 import RatingComponent from "./filter/RatingComponent";
 import ApprovalComponent from "./filter/ApprovalComponent";
+
 class LobbyFilterComponent extends Component {
   render() {
     return (
