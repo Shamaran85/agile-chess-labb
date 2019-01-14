@@ -8,9 +8,9 @@ let moveArr = [];
  * Add function to get all played games between two ids, and returns results.
  * */
 exports.getRoom = (id, move) => {
-    let test = moveArr.find(game => id === game.gameId)
-    if (test) {
-        test.history.push(move.from, move.to, move.newFen, move.checkmate);
+    let gameHistory = moveArr.find(game => id === game.gameId)
+    if (gameHistory) {
+        gameHistory.history.push(move.from, move.to, move.newFen, move.checkmate);
     } else {
         moveArr.push({
             history: [move.from, move.to, move.newFen, move.checkmate],
