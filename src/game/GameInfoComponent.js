@@ -12,12 +12,14 @@ class GameInfoComponent extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {};
   }
 
   componentDidMount() {
             // Stream data from RxJS service
             LobbyStore.getLocalUserInfo().subscribe(data => {
                 console.log(data)
+                this.setState(data)
               });
   }
   toTaltPointPlayer1() {
@@ -57,15 +59,6 @@ class GameInfoComponent extends Component {
     return tableBodys;
 
   }
-  ShowId () {
-
-  }
-
-  getLocalUserInfo() {
-    return this.userInfo;
-    
-}
-
   render() {
     return (
       <div className="gameInfo">
@@ -73,18 +66,19 @@ class GameInfoComponent extends Component {
         <h4><FontAwesomeIcon icon="chess-pawn" /> Game Info: </h4>
         <div className="gameInfoBody">
         <div>
-          <p><strong>ID: </strong> {this.props.his.player1.id}</p>
-          <p><strong>Player 1:</strong> {this.props.his.player1.name}</p>
+          <p><strong>ID: {this.state._id}</strong> </p>
+          <p><strong>Player 1: Anonymous</strong> </p>
         </div>
         <div>
-          <p><strong>ID: </strong> {this.props.his.player2.id}</p>
-          <p><strong>Player 1:</strong> {this.props.his.player2.name}</p>
+          <p><strong>ID: </strong> </p>
+          <p><strong>Player 2:Anonymous</strong> </p>
         </div>
         </div>
         <div className="result-table">
         <h2>Match result history: </h2>
         <h3 className="bestof5">BEST OF 5 <FontAwesomeIcon icon="trophy" /> </h3>
-          <table>
+          
+        <table>
             <tr>
                <th>The Player</th>
                <th>Win/Lose</th>
@@ -95,12 +89,12 @@ class GameInfoComponent extends Component {
                <th>Wins Totalt</th>
             </tr>
             <tr>
-               <td><strong></strong> {this.props.his.player1.name}</td>
+               <td><strong>Player 1</strong> </td>
                {this.getTdsPlayer1()}
                <td>{this.toTaltPointPlayer1()}</td>
             </tr>
             <tr>
-               <td><strong></strong> {this.props.his.player2.name}</td>
+               <td><strong>Player 2</strong> </td>
                {this.getTdsPlayer2()}
                <td>{this.toTaltPointPlayer2()}</td>
             </tr>
