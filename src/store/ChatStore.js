@@ -1,7 +1,7 @@
 import { BehaviorSubject } from "rxjs";
 //const Chess = require('chess.js').Chess;
 
-import { socket } from '../api/socket.io';
+import { socket } from "../api/socket.io";
 
 const defaultState = {
   message: {
@@ -30,8 +30,8 @@ class ChatStore {
     return subject;
   }
 
-  chat(msg) {
-    socket.emit("chat", msg);
+  chat(roomId, msg) {
+    socket.emit("chat", { roomId, msg });
   }
 }
 

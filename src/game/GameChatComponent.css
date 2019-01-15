@@ -6,12 +6,13 @@
   margin: 0 auto;
 }
 
-
 /* Chat Messages  */
 .chat__messages__container {
   background-color: #eee;
-  height: 244px;
+  height: 249px;
+  width: 200px;
   overflow-y: scroll;
+  overflow-wrap: break-word;
 }
 
 .chat__messages {
@@ -24,11 +25,15 @@
 .chat__item {
   color: #555;
   margin: 5px 0;
-  font-size: 14px;
+  font-size: 12px;
 }
 /* Username */
 .chat__text span {
   font-weight: bold;
+}
+
+.chat__text_own {
+  color: red;
 }
 
 /* Chat Message Input Field */
