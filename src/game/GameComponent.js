@@ -58,12 +58,9 @@ class GameComponent extends Component {
 
  render() {
     return (
-      <div className="game__container">
-        <div className="left__container">
-          <div className="game__chat">
-            <GameChatComponent />
-          </div>
-       <div className="mainBox">
+      <div>
+<div className="top__container">
+      <div className="">
           <table className="seeker-table">
             <thead>
                   <tr>
@@ -82,6 +79,15 @@ class GameComponent extends Component {
         </table>
 
          </div>
+      </div>
+
+      <div className="game__container">
+      
+        <div className="left__container">
+          <div className="game__chat">
+          <GameChatComponent roomId={this.props.match.params.id} />
+          </div>
+       
           <p>Demo-message:{this.state.message}</p>
         </div>
         <div className="center__container">
@@ -104,6 +110,7 @@ class GameComponent extends Component {
             <GameInfoComponent />
           </div>
         </div>
+      </div>
       </div>
     );
   }

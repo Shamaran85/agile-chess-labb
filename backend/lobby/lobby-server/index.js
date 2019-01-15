@@ -51,8 +51,8 @@ io.use((socket, next) => {
     });
 
     // Listen for new Chat Messages
-    socket.on("chat", function (msg) {
-        io.emit("chat", msg);
+    socket.on("chat", function (payload) {
+        io.to((+payload.roomId)).emit("chat", payload.msg);
     });
 
     socket.on('room', payload => {
