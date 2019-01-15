@@ -13,18 +13,31 @@ class GameInfoComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      resultOfplayer1: [1,0,1,1,1,1,1],
-      resultOfplayer2: [0,1,0,0,0,0,0],
+      resultOfplayer1: [],
+      resultOfplayer2: [],
+      event: {}
     };
   }
 
   componentDidMount() {
-            // Stream data from RxJS service
-            LobbyStore.getLocalUserInfo().subscribe(data => {
-                console.log(data)
-                this.setState(data)
-              });
+    // Stream data from RxJS service
+    LobbyStore.getLocalUserInfo().subscribe(data => {
+    LobbyStore.getEvents().subscribe((eventList) => {
+    console.log('comp-event-mounted', eventList);
+    // FILTER EVENTSLIST, WHERE eventList[i] === data._id
+    const evenFilter = eventList.filter((ob)=> {
+      return ob._id === data._id;
+    })
+    if (evenFilter && evenFilter.length) {
+      this.setState({event: evenFilter[0] })
+
+    }
+    });
+    this.setState(data)
+    });
+
   }
+  
   toTaltPointPlayer1() {
     var results = this.state.resultOfplayer1;
     var total = 0;
@@ -41,7 +54,7 @@ class GameInfoComponent extends Component {
     }
     return total;
   }
-
+  
   render() {
     return (
       <div className="gameInfo">
@@ -49,11 +62,12 @@ class GameInfoComponent extends Component {
         <h4><FontAwesomeIcon icon="chess-pawn" /> Game Info: </h4>
         <div className="gameInfoBody">
         <div>
-          <p><strong>ID: {this.state._id}</strong> </p>
+          <p><strong>ID Room: {this.state._id}</strong></p>
+          <p><strong>ID: {this.state.event.creatorId}</strong> </p>
           <p><strong>Player 1: Anonymous</strong> </p>
         </div>
         <div>
-          <p><strong>ID: {this.state._id}</strong> </p>
+          <p><strong>ID: {this.state.event.secondPlayer}</strong> </p>
           <p><strong>Player 2:Anonymous</strong> </p>
         </div>
         </div>
@@ -81,7 +95,6 @@ class GameInfoComponent extends Component {
               <td><strong>Totalt point</strong></td>
               <td>{this.toTaltPointPlayer2()}</td>
             </tr>
-
           </table>
         </div>
       </div>

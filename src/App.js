@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import LobbyComponent from './lobby/LobbyComponent';
 import GameComponent from './game/GameComponent';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChessKnight, faChessPawn, faTrophy } from '@fortawesome/free-solid-svg-icons'
 import './App.css';
 library.add(faChessKnight, faChessPawn, faTrophy)
