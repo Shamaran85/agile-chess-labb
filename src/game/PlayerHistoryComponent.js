@@ -12,9 +12,8 @@ class PlayerHistoryComponent extends Component {
 
   componentDidMount() {
     GameStore.getSubject().subscribe((payload) => {
-      console.log(payload)
-this.setState({
-  history: payload.history
+      this.setState({
+      history: payload.history
     });
   })
   }
@@ -22,6 +21,7 @@ this.setState({
   onClick(move) {
     const fen = move.fen;
     GameStore.showPosition(fen);
+    
   }
 
   render() {

@@ -45,6 +45,14 @@ class GameStore {
   onMove(from, to, roomId, noEmit = false) {
     const chess = new Chess(this.getState().current_position);
     let newHistory = [...this.getState().history];
+    
+    // if viewing historic, push position back to current historic move.
+    if (this.isViewingHistoric()) {
+      this.setState({
+        fen: this.getState().fen,
+      })
+      return;
+    }
     if (!noEmit) {
       socket.emit("move", { from, to, roomId });
     }
@@ -70,6 +78,7 @@ class GameStore {
    * @param fen - string that represents position.
   */
   showPosition(fen) {
+
     this.setState({
       fen,
     });
@@ -83,6 +92,15 @@ class GameStore {
   isCheckmate() {
     const chess = new Chess(this.getState().current_position);
     return chess.in_checkmate();
+  }
+
+  isViewingHistoric() {
+    // some logic for checking if displaying an historic move
+    const state = this.getState();
+    if (state.fen !== state.current_position) {
+      return true;
+    }
+    return false;
   }
 }
 

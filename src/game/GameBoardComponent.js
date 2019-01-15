@@ -4,9 +4,28 @@ import "react-chessground/dist/styles/chessground.css";
 import gameStore from "../store/GameStore";
 
 class GameBoardComponent extends Component {
-  onComponentDidMount() { }
+  state = {
+    viewOnly: false
+  }
+  componentDidMount() {
+    gameStore.getSubject().subscribe((st) => {
+      let viewOnly = false;
+      if (gameStore.isCheckmate() ) {
+        viewOnly = true;
+      }
+
+      if (this.state.viewOnly !== viewOnly) {
+        this.setState({viewOnly}, () => {
+        })
+
+      }
+    })
+
+  }
   render() {
+
     return (
+      
       <div>
         GameBoardComponent
         <Chessground
@@ -14,7 +33,7 @@ class GameBoardComponent extends Component {
           onMove={(from, to) => gameStore.onMove(from, to, this.props.roomId)}
           turnColor={gameStore.checkTurnColor()}
           check={gameStore.isChecked()}
-          viewOnly={gameStore.isCheckmate()}
+          viewOnly={this.state.viewOnly}
         />
       </div>
     );
