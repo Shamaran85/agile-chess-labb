@@ -13,7 +13,7 @@ class RatingComponent extends Component {
   }
 
   onChange(value) {
-    this.props.someCallback(value);
+    this.props.ratingCallback(value);
 
     this.setState({value})
   }

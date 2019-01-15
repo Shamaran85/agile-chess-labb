@@ -10,11 +10,11 @@ class RatingComponent extends Component {
     return (
       <div className="ApprovalComponent">
 
-        <input type="text" />
-        <input type="submit" onClick={this.onSubmit.bind(this)}/>
+        {/*<input type="text" />
+        <input type="submit" onClick={this.onSubmit.bind(this)}/>*/}
 
         <button className="ApprovalButton">Återställ</button>
-        <button className="ApprovalButton">Använd</button>
+        <button className="ApprovalButton" onClick={this.onSubmit.bind(this)}>Använd</button>
 
       </div>
     );

@@ -5,11 +5,15 @@ import LobbySeeksComponent from './LobbySeeksComponent';
 import LobbyCreateGameComponent from './LobbyCreateGameComponent';
 
 class LobbyComponent extends Component {
+  filterCallback(log){
+  }
+
+
   render() {
     return (
       <div>
         <LobbySeeksComponent />
-        <LobbyFilterComponent />
+        <LobbyFilterComponent filterCallback={this.filterCallback.bind(this)}/>
         <LobbyCreateGameComponent />
       </div>
     );

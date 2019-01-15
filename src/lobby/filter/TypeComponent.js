@@ -3,6 +3,14 @@ import './TypeComponent.css';
 
 
 class TypeComponent extends Component {
+
+  onChange(value) {
+    this.props.typeCallback(value);
+
+    this.setState({value})
+  }
+
+
   render() {
     return (
       <div className="typeComponent">
