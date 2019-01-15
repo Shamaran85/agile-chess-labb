@@ -23,11 +23,39 @@ class GameComponent extends Component {
   }
   renderResults() {
     if (this.state.history_results) {
-      return this.state.history_results.map((his) => {
-        return <p>{his}</p>
+      return this.state.history_results.map((id, his) => {
+        return <p key={id}>{his}</p>
       })
     }
     return null;
+  }
+
+  getCurrentEvent() {
+    let myGameInfo = [];
+    if (this.state.event) {
+      Object.entries(this.state.event).forEach(entry => {
+        let key = entry[0];
+        let value = entry[1];
+        let sign = '';
+        if (entry.playerColor === 'b') {
+          sign = <i className="fas fa-circle"></i>
+        } else {
+          sign = <i className="far fa-circle"></i>
+        }
+
+        myGameInfo.push(
+          <tr key={key}>
+            <td>{sign}</td>
+            <td>{value.creatorId}</td>
+            <td>{value.secondPlayer}</td>
+            <td>{value.time}</td>
+            <td>{value.gameType}</td>
+            <td></td>
+          </tr>
+        )
+      })
+    }
+    return myGameInfo;
   }
 
   render() {
