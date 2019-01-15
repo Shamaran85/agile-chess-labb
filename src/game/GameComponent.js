@@ -109,9 +109,7 @@ class GameComponent extends Component {
                 history={['e4', 'e5']} />
             </div>
           </div>
-          <div className="game__timer">
           <GameTimeComponent time={this.state.time} />
-          </div>
         </div>
       </div>
       </div>
