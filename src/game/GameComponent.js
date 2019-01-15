@@ -61,7 +61,7 @@ class GameComponent extends Component {
       <div className="game__container">
         <div className="left__container">
           <div className="game__chat">
-            <GameChatComponent />
+          <GameChatComponent roomId={this.props.match.params.id} />
           </div>
        <div className="mainBox">
           <table className="seeker-table">

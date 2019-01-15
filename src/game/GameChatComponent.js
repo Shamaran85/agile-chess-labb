@@ -4,7 +4,7 @@ import "./GameChatComponent.css";
 import ChatStore from "../store/ChatStore";
 import LobbyStore from "../store/LobbyStore";
 import { socketAPI } from "../config/";
-import { get } from "https";
+
 
 class GameChatComponent extends Component {
   constructor(props) {
@@ -69,9 +69,10 @@ class GameChatComponent extends Component {
       userName: this.state.userName,
       userMessage: this.state.chatMessage
     };
+    const roomId = this.props.roomId;
 
     if (this.state.chatMessage.length) {
-      ChatStore.chat(data);
+      ChatStore.chat(roomId, data);
     }
 
     this.setState({ chatMessage: "" });
