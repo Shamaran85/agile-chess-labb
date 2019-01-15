@@ -4,11 +4,22 @@ import { socket } from '../api/socket.io';
 import LobbyStore from '../store/LobbyStore';
 
 const defaultState = {
-  fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+  fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
   history: [],
+  history_results: [],
   event: []
 
 };
+
+const players = [{
+  id: 1,
+  name: 'Player1'
+}, {
+  id: 2,
+  name: 'Player2'
+}];
+
+const playerIds = [1, 2]
 
 const subject = new BehaviorSubject(defaultState);
 
@@ -16,17 +27,24 @@ class GameStore {
   chess = new Chess()
 
   constructor() {
-    socket.on('move', (move) => this.onMove(move.from, move.to, move.roomId, true))
+    socket.on("move", move =>
+      this.onMove(move.from, move.to, move.roomId, true)
+    );
+    socket.on("history", history =>
+      this.setState({
+        history_results: history
+      })
+    );
 
     this.setState({})
   }
   joinRoom(id) {
-    socket.emit('room', { id })
+    socket.emit("room", { id, playerIds });
 
     LobbyStore.getEvents().subscribe((eventList) => {
       let currentRoomId = eventList.filter(room => room._id == id);
       this.setState({ event: currentRoomId });
-  });
+    });
 
   }
 
@@ -52,13 +70,15 @@ class GameStore {
   onMove(from, to, roomId, noEmit = false) {
     const chess = new Chess(this.getState().fen);
     let newHistory = [...this.getState().history];
-    if (!noEmit) {
-      socket.emit("move", { from, to, roomId });
-    }
+
     if (chess.move({ from, to })) {
       let newState = [{ from: from, to: to, fen: chess.fen() }];
-
       newHistory = newHistory.concat(newState);
+      if (!noEmit) {
+        let newFen = chess.fen();
+        let checkmate = chess.in_checkmate();
+        socket.emit("move", { from, to, roomId, newFen, checkmate, players });
+      }
     }
     this.setState({
       fen: chess.fen(),

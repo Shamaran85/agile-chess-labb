@@ -16,6 +16,7 @@
   "author": "Khoi Le",
   "license": "ISC",
   "dependencies": {
+    "chess.js": "^0.10.2",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
