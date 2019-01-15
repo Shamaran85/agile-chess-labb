@@ -1,0 +1,131 @@
+.AF-display-block {
+  display: block;
+}
+
+.AF-display-none {
+  display: none;
+}
+.AF-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.AF-main {
+  width: 300px;
+  margin: 20px auto;
+  color: #707070;
+  position:fixed;
+  background: white;
+  text-align: left;
+  height: auto;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  box-shadow: 0 0px 40px 5px #252525;
+  
+}
+.AF-main h3 {
+  font-size: 1.4em;
+  margin-left: 20px;
+}
+
+.AF-cross {
+  border-radius: 50%;
+  position: fixed;
+  top: -12px;
+  right: -12px;
+  padding: 5px;
+  font-size: 16px;
+  font-weight: bolder;
+  color: #8c8888;
+  background-color:white;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 32px;
+}
+.AF-cross:hover {
+  cursor: pointer;
+  background-color: #d8d8d8;
+}
+
+.AF-formContainer {
+  margin-left: 20px;
+  width: 70%;
+}
+
+.AF-inputGroup label {
+  font-weight: 700;
+  display: block;
+  margin-bottom: .5rem;
+  padding-left: 5px; 
+}
+.AF-inputGroup input {
+  font-weight: 700;
+  display: block;
+  margin-bottom: .5rem;
+  display: block;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  /* transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out; */
+}
+.AF-inputGroup input:focus, .AF-inputGroup input:active {
+  border: 1px solid red;
+}
+.AF-inputGroup button {
+  border: 1px solid #e2e2e2;
+  border-radius: 2px;
+  padding: 6px 11px;
+  background: linear-gradient(to bottom,rgba(245,245,245,1) 0%,rgba(240,240,240,1) 100%);
+  text-shadow: 0 1px 0 #fff;
+  color: #848484;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 10px 0;
+}
+.AF-inputGroup button:hover {
+  cursor: pointer;
+  background: linear-gradient(to bottom,rgba(245,245,245,1) 0%,rgb(220, 217, 217) 100%);
+}
+.AF-span {
+  display: block;
+  border-top: 1px solid #eaeaea;
+  padding: 10px 0;
+  font-size: 11px;
+  font-weight: bolder;
+}
+
+.AF-span:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.AF-errorSpan {
+  display: none;
+  font-size: 0.9em;
+  color: red;
+  margin-bottom: 5px;
+  padding-left: 5px;
+}
+
+.AF-displayError {
+  display: block;
+}
+
+.AF-errorMessage {
+  display: block;
+  font-size: 0.9em;
+  color: red;
+  margin-bottom: 5px;
+  padding-left: 5px;
+}

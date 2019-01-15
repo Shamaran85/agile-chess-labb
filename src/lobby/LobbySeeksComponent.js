@@ -10,7 +10,9 @@ class LobbySeeksComponent extends Component {
         super(props);
         this.state = {
             events: [],
-            localUserInfo: {}
+            localUserInfo: {},
+            shouldRedirect: false,
+
         };
     }
 
@@ -32,7 +34,8 @@ class LobbySeeksComponent extends Component {
 
     componentWillUnmount() {
         this.mounted = false;
-        LobbyStore.unsubscribe();
+       /*  LobbyStore.getLocalUserInfo().unsubscribe();
+        LobbyStore.getEvents().unsubscribe(); */
     }
 
     handleSetState = (payload) => {
@@ -65,7 +68,8 @@ class LobbySeeksComponent extends Component {
             })
             .then(() => {
                 console.log('Update ok now')
-                return <Redirect to={`/game/:${event._id}`} />
+                this.setState({ ...this.state, shouldRedirect: true, event_id: event._id })
+               /*  return <Redirect to={`/game/:${event._id}`} /> */
             })
             .catch(error => console.log(error.message));
 
@@ -87,9 +91,9 @@ class LobbySeeksComponent extends Component {
         return  this.state.events.map((user, index) => {
             let sign = '';
             if(user.playerColor === 'b'){
-                sign = <i class="fas fa-circle"></i>
+                sign = <i className="fas fa-circle"></i>
             }else if(user.playerColor === 'w'){
-                sign = <i class="far fa-circle"></i>
+                sign = <i className="far fa-circle"></i>
             }else {
                 return null
             }
@@ -98,7 +102,7 @@ class LobbySeeksComponent extends Component {
 
             return <tr key={index}>
                     <td>{sign}</td>
-                    <td><a onClick={(e)=>this.enterGame(e, user)}>{user.creatorId}</a></td>
+                    <td><a onClick={(e)=>this.enterGame(e, user)}>{user._id}</a></td>
                     <td>1600</td>
                     <td>{user.time}</td>
                     <td>{user.gameType}</td>
@@ -110,28 +114,32 @@ class LobbySeeksComponent extends Component {
     }
 
     render() {
+        const {shouldRedirect, event_id} = this.state
+        let mainbox = (<div className="mainBox">
+        <table className="seeker-table">
+              <thead>
+                    <tr>
+                        <th><i className="fas fa-shield-alt"></i></th>
+                        <th>Name</th>
+                        <th>Rating</th>
+                        <th>Time</th>
+                        <th>Type</th>
+                        <th><i className="fas fa-cog"></i></th>
+                    </tr>
+                </thead>
 
+                <tbody>
+                    {this.gameSeeks()}
+                </tbody>
+
+            </table>
+        </div>)
+        if (shouldRedirect) {
+            mainbox = <Redirect to={`/game/${event_id}`} />
+        }
         return (
             <div>
-                <div className="mainBox">
-                <table className="seeker-table">
-                      <thead>
-                            <tr>
-                                <th><i class="fas fa-shield-alt"></i></th>
-                                <th>Name</th>
-                                <th>Rating</th>
-                                <th>Time</th>
-                                <th>Type</th>
-                                <th><i class="fas fa-cog"></i></th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            {this.gameSeeks()}
-                        </tbody>
-
-                    </table>
-                </div>
+               {mainbox}
             </div>
         );
     }

@@ -1,0 +1,32 @@
+.LCmain {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.LCtopbar {
+  display: flex;
+  justify-content: space-between;
+}
+.LCcreategame > div p {
+  padding: 5px 10px;
+  /* border: 1px solid blue; */
+  color: #495057;
+  font-weight: bolder;
+  font-size: 12px;
+  background-color: #e8e8e8;
+}
+.LClogin > div > div p {
+  padding: 5px 10px;
+ /*  border: 1px solid red; */
+  color: #495057;
+  font-weight: bolder;
+  font-size: 12px;
+  background-color: #e8e8e8;
+}
+
+.LCcreategame > div p:hover, .LClogin > div > div p:hover {
+  background-color: #d4d3d3;
+  cursor: pointer;
+}

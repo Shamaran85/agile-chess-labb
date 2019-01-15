@@ -1,11 +1,14 @@
-import { BehaviorSubject } from "rxjs";
-import Chess from "chess.js";
-import { socket } from "../api/socket.io";
+import { BehaviorSubject } from 'rxjs';
+import Chess from 'chess.js';
+import { socket } from '../api/socket.io';
+import LobbyStore from '../store/LobbyStore';
 
 const defaultState = {
   fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
   history: [],
   history_results: [],
+  event: []
+
 };
 
 const players = [{
@@ -21,6 +24,8 @@ const playerIds = [1, 2]
 const subject = new BehaviorSubject(defaultState);
 
 class GameStore {
+  chess = new Chess()
+
   constructor() {
     socket.on("move", move =>
       this.onMove(move.from, move.to, move.roomId, true)
@@ -31,20 +36,26 @@ class GameStore {
       })
     );
 
-    this.setState({});
+    this.setState({})
   }
-
   joinRoom(id) {
     socket.emit("room", { id, playerIds });
+
+    LobbyStore.getEvents().subscribe((eventList) => {
+      let currentRoomId = eventList.filter(room => room._id == id);
+      this.setState({ event: currentRoomId });
+    });
+
   }
 
   getState() {
     return subject.value;
+
   }
   setState(st) {
     const val = subject.value;
     const state = Object.assign({}, val, st);
-    subject.next(state);
+    subject.next(state)
   }
 
   getSubject() {
@@ -84,6 +95,7 @@ class GameStore {
     const chess = new Chess(this.getState().fen);
     return chess.in_checkmate();
   }
+
 }
 
 export default new GameStore();
