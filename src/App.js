@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import LobbyComponent from './lobby/LobbyComponent';
 import GameComponent from './game/GameComponent';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faChessKnight, faChessPawn, faTrophy } from '@fortawesome/free-solid-svg-icons'
+import './App.css';
+library.add(faChessKnight, faChessPawn, faTrophy)
+
+
 
 class App extends Component {
   render() {

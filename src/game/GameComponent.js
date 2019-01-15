@@ -6,7 +6,6 @@ import GameChatComponent from './GameChatComponent';
 import PlayerHistoryComponent from './PlayerHistoryComponent';
 
 import gameStore from '../store/GameStore';
-
 class GameComponent extends Component {
   constructor(props) {
     super(props);
@@ -16,17 +15,24 @@ class GameComponent extends Component {
     gameStore.getSubject().subscribe((st) => {
       this.setState(st);
     });
+    gameStore.joinRoom(this.props.match.params.id)
+  }
+  historyClicked(move) {
+
   }
   render() {
     return (
       <div>
         <div>
           <GameChatComponent />
-          <GameBoardComponent fen={this.state.fen} />
+          <GameBoardComponent fen={this.state.fen} roomId={this.props.match.params.id} />
           <GameInfoComponent />
         </div>
         <div>
-          <PlayerHistoryComponent />
+
+            <PlayerHistoryComponent 
+              onClick={(e) => this.historyClicked(e)} 
+              history={['e4','e5']} />
         </div>
         <p>Demo-message:{this.state.message}</p>
       </div>
