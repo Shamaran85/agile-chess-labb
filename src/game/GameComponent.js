@@ -41,6 +41,10 @@ class GameComponent extends Component {
             {this.renderResults()}
 
           </div>
+
+          <PlayerHistoryComponent
+            onClick={(e) => this.historyClicked(e)}
+            history={['e4', 'e5']} />
         </div>
         <p>Demo-message:{this.state.message}</p>
       </div>
