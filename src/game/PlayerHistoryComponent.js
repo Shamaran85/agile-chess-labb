@@ -3,24 +3,24 @@ import Chess from 'chess.js';
 import GameStore from '../store/GameStore';
 
 class PlayerHistoryComponent extends Component {
-  
+
   state = {
     history: []
   }
-  chess = new Chess();  
+  chess = new Chess();
 
 
   componentDidMount() {
     GameStore.getSubject().subscribe((payload) => {
       console.log(payload)
-this.setState({
-  history: payload.history
-    });
-  })
+      this.setState({
+        history: payload.history
+      });
+    })
   }
 
   render() {
-    
+
     this.chess.move(history)
 
     const history = this.state.history.map((move) => {
@@ -28,7 +28,6 @@ this.setState({
     })
     return (
       <div>
-        PlayerHistoryComponent
         <ul>
           {history}
         </ul>

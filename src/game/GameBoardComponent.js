@@ -8,7 +8,6 @@ class GameBoardComponent extends Component {
   render() {
     return (
       <div>
-        GameBoardComponent
         <Chessground
           fen={this.props.fen}
           onMove={(from, to) => gameStore.onMove(from, to, this.props.roomId)}
