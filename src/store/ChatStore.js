@@ -7,7 +7,7 @@ const defaultState = {
   message: {
     userId: "Host",
     userName: "Host",
-    userMessage: "Welcome to room 123"
+    userMessage: "Welcome!"
   }
 };
 
