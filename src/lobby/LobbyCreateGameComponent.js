@@ -32,7 +32,7 @@ class LobbyCreateGameComponent extends Component {
   }
   componentWillUnmount() {
     this.mounted = false;
-    LobbyStore.unsubscribe();
+   /*  LobbyStore.getLocalUserInfo().unsubscribe(); */
   }
 
   handleSetState = payload => {
@@ -143,10 +143,6 @@ class LobbyCreateGameComponent extends Component {
     })
       .then(response => response.json())
       .then(result => {
-        
-        LobbyStore.storeUserInfoToLocalStorage({
-          _id: result.insertedId
-        });
       })
       .catch(error => console.log(error));
   };
