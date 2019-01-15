@@ -12,7 +12,6 @@ class LobbyLoginComponent extends Component {
       isLoggedIn: false,
       errorMessage: '',
       isRegistered: true,
-      isValid: false,
       userName: {
         value: '',
         valid: false,
@@ -210,7 +209,7 @@ class LobbyLoginComponent extends Component {
       </div>
     )
     if (this.state.isLoggedIn) {
-      displayAuth = <p onClick={this.logOut}>Logga ut</p>;
+      displayAuth = <div><p onClick={this.logOut}>Logga ut</p></div>;
     }
     return (
       <div>
