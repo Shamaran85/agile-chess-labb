@@ -87,9 +87,9 @@ class LobbySeeksComponent extends Component {
         return  this.state.events.map((user, index) => {
             let sign = '';
             if(user.playerColor === 'b'){
-                sign = <i class="fas fa-circle"></i>
+                sign = <i className="fas fa-circle"></i>
             }else if(user.playerColor === 'w'){
-                sign = <i class="far fa-circle"></i>
+                sign = <i className="far fa-circle"></i>
             }else {
                 return null
             }
@@ -117,12 +117,12 @@ class LobbySeeksComponent extends Component {
                 <table className="seeker-table">
                       <thead>
                             <tr>
-                                <th><i class="fas fa-shield-alt"></i></th>
+                                <th><i className="fas fa-shield-alt"></i></th>
                                 <th>Name</th>
                                 <th>Rating</th>
                                 <th>Time</th>
                                 <th>Type</th>
-                                <th><i class="fas fa-cog"></i></th>
+                                <th><i className="fas fa-cog"></i></th>
                             </tr>
                         </thead>
 

@@ -1,0 +1,59 @@
+
+.game__container {
+    display: flex;
+    width: 962px;
+    margin: 0 auto;
+    margin-top: 5vh;
+}
+
+.left__container {
+    width: 200px;
+}
+
+.center__container {
+    width: 512px;
+    margin: 0 25px;
+}
+
+.right__container {
+    width: 200px;
+}
+
+.game__history {
+        width: 198px;
+        height: 200px;
+        border: 1px solid #ccc;
+        margin: 0 auto;       
+}
+
+/* Chat Messages  */
+.game__history__moves {
+    background-color: #eee;
+    height: 168px;
+    overflow-y: scroll;
+  }
+
+.game__history ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    margin: 0;
+    padding: 10px;
+}
+
+.game__history ul li {
+    width: 80px;
+}
+
+/* Title */
+.chat__title, .history__title {
+    background-color: #ccc;
+    padding: 5px;
+  }
+  
+.chat__title p, .history__title p {
+    color: #555;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+  }
