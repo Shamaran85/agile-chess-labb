@@ -1,56 +1,107 @@
-import { BehaviorSubject } from 'rxjs';
-import Chess from 'chess.js';
+import { BehaviorSubject } from "rxjs";
+import Chess from "chess.js";
+import { socket } from "../api/socket.io";
+
+const START_POSITION = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 const defaultState = {
-  message: 'test',
-  fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+  fen: START_POSITION, // Currently displayed on board
+  current_position: START_POSITION, // Current position(last move)
   history: []
 };
 
 const subject = new BehaviorSubject(defaultState);
 
 class GameStore {
-  chess = new Chess()
   constructor() {
-    this.setState({})
+    socket.on("move", move =>
+      this.onMove(move.from, move.to, move.roomId, true)
+    );
+
+    this.setState({});
   }
+
+  joinRoom(id) {
+    socket.emit("room", { id });
+  }
+
   getState() {
     return subject.value;
-
   }
   setState(st) {
     const val = subject.value;
     const state = Object.assign({}, val, st);
-    subject.next(state)
+    subject.next(state);
   }
 
   getSubject() {
     return subject;
   }
 
-  updateDemoMessage(payload) {
-    this.setState(payload)
-  }
   checkTurnColor = () => {
-    return this.chess.turn() === 'w' ? 'white' : 'black';
-  }
+    const chess = new Chess(this.getState().current_position);
+    return chess.turn() === "w" ? "white" : "black";
+  };
 
-  onMove(from, to) {
-    const chess = new Chess(this.getState().fen)
-    console.log(chess.fen())
-    let newHistory = [...this.getState().history]
-
+  onMove(from, to, roomId, noEmit = false) {
+    const chess = new Chess(this.getState().current_position);
+    let newHistory = [...this.getState().history];
+    
+    // if viewing historic, push position back to current historic move.
+    if (this.isViewingHistoric()) {
+      this.setState({
+        fen: this.getState().fen,
+      })
+      return;
+    }
+    if (!noEmit) {
+      socket.emit("move", { from, to, roomId });
+    }
     if (chess.move({ from, to })) {
-      let newState = [{ from: from, to: to, fen: chess.fen() }]
-      newHistory = newHistory.concat(newState)
+      let newState = [{ from: from, to: to, fen: chess.fen() }];
+
+      newHistory = newHistory.concat(newState);
     }
 
+    const position = chess.fen();
     this.setState({
-      fen: chess.fen(),
+      fen: position,
+      current_position: position,
       history: newHistory
-    })
-    console.log(this.getState().history);
+    });
   }
 
+  /**
+   * Takes a fen-string and displays on board.
+   *
+   * https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
+   *
+   * @param fen - string that represents position.
+  */
+  showPosition(fen) {
+
+    this.setState({
+      fen,
+    });
+  }
+
+  isChecked() {
+    const chess = new Chess(this.getState().current_position);
+    return chess.in_check();
+  }
+
+  isCheckmate() {
+    const chess = new Chess(this.getState().current_position);
+    return chess.in_checkmate();
+  }
+
+  isViewingHistoric() {
+    // some logic for checking if displaying an historic move
+    const state = this.getState();
+    if (state.fen !== state.current_position) {
+      return true;
+    }
+    return false;
+  }
 }
 
 export default new GameStore();
