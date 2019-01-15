@@ -37,7 +37,7 @@ class LobbyStore {
      * @param {*} payload = {
      *      "_id": "userIdString"
      * }
-     * 
+     *
      * This function will do 2 tasks:
      * - store the user ID into localStorage { "_id": "userIdString" } with the key name is "userInfo"
      * - emit the "userInfo" object to other components via RxJS service
