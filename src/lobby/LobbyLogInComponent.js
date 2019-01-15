@@ -209,7 +209,7 @@ class LobbyLoginComponent extends Component {
       </div>
     )
     if (this.state.isLoggedIn) {
-      displayAuth = <p onClick={this.logOut}>Logga ut</p>;
+      displayAuth = <div><p onClick={this.logOut}>Logga ut</p></div>;
     }
     return (
       <div>
