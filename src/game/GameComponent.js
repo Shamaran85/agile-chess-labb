@@ -46,7 +46,7 @@ class GameComponent extends Component {
         myGameInfo.push(
           <tr key={key}>
             <td>{sign}</td>
-            <td>{value.creatorId}</td>
+            <td>{value._id}</td>
             <td>{value.secondPlayer}</td>
             <td>{value.time}</td>
             <td>{value.gameType}</td>
