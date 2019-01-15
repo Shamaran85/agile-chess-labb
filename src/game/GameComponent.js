@@ -18,6 +18,14 @@ class GameComponent extends Component {
     });
     gameStore.joinRoom(this.props.match.params.id)
   }
+  renderResults() {
+    if (this.state.history_results) {
+      return this.state.history_results.map((his) => {
+        return <p>{his}</p>
+      })
+    }
+    return null;
+  }
   render() {
     return (
       <div>
@@ -28,6 +36,11 @@ class GameComponent extends Component {
         </div>
         <div>
           <PlayerHistoryComponent />
+          <div>
+            Historic results
+            {this.renderResults()}
+
+          </div>
         </div>
         <p>Demo-message:{this.state.message}</p>
       </div>

@@ -5,7 +5,18 @@ import { socket } from "../api/socket.io";
 const defaultState = {
   fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
   history: [],
+  history_results: [],
 };
+
+const players = [{
+  id: 1,
+  name: 'Player1'
+}, {
+  id: 2,
+  name: 'Player2'
+}];
+
+const playerIds = [1, 2]
 
 const subject = new BehaviorSubject(defaultState);
 
@@ -14,12 +25,17 @@ class GameStore {
     socket.on("move", move =>
       this.onMove(move.from, move.to, move.roomId, true)
     );
+    socket.on("history", history =>
+      this.setState({
+        history_results: history
+      })
+    );
 
     this.setState({});
   }
 
   joinRoom(id) {
-    socket.emit("room", { id });
+    socket.emit("room", { id, playerIds });
   }
 
   getState() {
@@ -50,7 +66,7 @@ class GameStore {
       if (!noEmit) {
         let newFen = chess.fen();
         let checkmate = chess.in_checkmate();
-        socket.emit("move", { from, to, roomId, newFen, checkmate });
+        socket.emit("move", { from, to, roomId, newFen, checkmate, players });
       }
     }
     this.setState({
@@ -66,8 +82,7 @@ class GameStore {
 
   isCheckmate() {
     const chess = new Chess(this.getState().fen);
-    let checkmate = chess.in_checkmate()
-    return checkmate;
+    return chess.in_checkmate();
   }
 }
 
