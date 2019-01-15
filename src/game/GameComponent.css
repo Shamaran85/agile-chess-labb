@@ -6,6 +6,12 @@
   font-size: 12px;
 }
 
+.top__container {
+  /* display: block!important; */
+  width: 962px!important;
+  margin: 0 auto;
+}
+
 .left__container {
   width: 200px;
 }
