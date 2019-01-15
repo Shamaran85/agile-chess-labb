@@ -90,6 +90,7 @@ class LobbyLoginComponent extends Component {
     
   }
   logOut = () => {
+    localStorage.removeItem("userInfo"); // Hot fix by K. I have no time.
     this.setState({...this.state, isLoggedIn: false})
   }
   loginUser() {
@@ -109,7 +110,7 @@ class LobbyLoginComponent extends Component {
     .then(response => response.json())
     .then((data) => {
       if (data.status) {
-        LobbyStore.storeUserInfoToLocalStorage(data._id)
+        LobbyStore.storeUserInfoToLocalStorage({ "_id" : data._id })
         this.setState({ ...this.state, isLoggedIn: true})
         this.hideAuth();
       } else {
@@ -137,7 +138,7 @@ class LobbyLoginComponent extends Component {
     })
     .then(response => response.json())
     .then(data => {
-      LobbyStore.storeUserInfoToLocalStorage(data.insertedId)
+      LobbyStore.storeUserInfoToLocalStorage({ "_id" : data.insertedId })
       this.setState({ ...this.state, isLoggedIn: true})
       this.hideAuth();
     })
