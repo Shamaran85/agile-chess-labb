@@ -5,6 +5,7 @@ import './GameComponent.css';
 import GameBoardComponent from './GameBoardComponent';
 import GameInfoComponent from './GameInfoComponent';
 import GameChatComponent from './GameChatComponent';
+import GameTimeComponent from './GameTimeComponent';
 import PlayerHistoryComponent from './PlayerHistoryComponent';
 
 import gameStore from '../store/GameStore';
@@ -86,9 +87,11 @@ class GameComponent extends Component {
         <div className="left__container">
           <div className="game__chat">
           <GameChatComponent roomId={this.props.match.params.id} />
-          </div>
-       
+          </div>       
           <p>Demo-message:{this.state.message}</p>
+          <div className="game__info">
+            <GameInfoComponent />
+          </div>          
         </div>
         <div className="center__container">
           <div className="game__table">
@@ -106,8 +109,8 @@ class GameComponent extends Component {
                 history={['e4', 'e5']} />
             </div>
           </div>
-          <div className="game__info">
-            <GameInfoComponent />
+          <div className="game__timer">
+          <GameTimeComponent time={this.state.time} />
           </div>
         </div>
       </div>

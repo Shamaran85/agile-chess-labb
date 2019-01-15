@@ -6,8 +6,8 @@ import LobbyStore from '../store/LobbyStore';
 const defaultState = {
   fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
   history: [],
-  event: []
-
+  event: [],
+  time: {}
 };
 
 const subject = new BehaviorSubject(defaultState);
@@ -16,8 +16,11 @@ class GameStore {
   chess = new Chess()
 
   constructor() {
-    socket.on('move', (move) => this.onMove(move.from, move.to, move.roomId, true))
-
+    socket.on('move', (payload) => { 
+      const { move, time } = payload;
+      this.onMove(move.from, move.to, move.roomId, true)
+      this.updateTime(time)
+    })
     this.setState({})
   }
   joinRoom(id) {
@@ -48,6 +51,12 @@ class GameStore {
     const chess = new Chess(this.getState().fen);
     return chess.turn() === "w" ? "white" : "black";
   };
+
+  updateTime(time) {
+    this.setState({
+      time
+    });
+  }
 
   onMove(from, to, roomId, noEmit = false) {
     const chess = new Chess(this.getState().fen);
