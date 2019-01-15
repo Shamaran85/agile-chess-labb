@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import './GameComponent.css';
+
 
 import GameBoardComponent from './GameBoardComponent';
 import GameInfoComponent from './GameInfoComponent';
@@ -19,19 +21,47 @@ class GameComponent extends Component {
     });
     gameStore.joinRoom(this.props.match.params.id)
   }
+  historyClicked(move) {
+
+  }
   render() {
     return (
+<<<<<<< HEAD
       <div>
         <div>
           <GameChatComponent />
           <GameBoardComponent fen={this.state.fen} roomId={this.props.match.params.id} />
           <GameInfoComponent history={his} />
           <GameTimeComponent time={this.state.time} />
+=======
+      <div className="game__container">
+        <div className="left__container">
+          <div className="game__chat">
+            <GameChatComponent />
+          </div>
+          <p>Demo-message:{this.state.message}</p>
         </div>
-        <div>
-          <PlayerHistoryComponent />
+        <div className="center__container">
+          <div className="game__table">
+            <GameBoardComponent fen={this.state.fen} roomId={this.props.match.params.id} />
+          </div>
+>>>>>>> development
         </div>
-        <p>Demo-message:{this.state.message}</p>
+        <div className="right__container">
+          <div className="game__history">
+            <div className="chat__title">
+              <p>History</p>
+            </div>
+            <div className="game__history__moves">
+              <PlayerHistoryComponent
+                onClick={(e) => this.historyClicked(e)}
+                history={['e4', 'e5']} />
+            </div>
+          </div>
+          <div className="game__info">
+            <GameInfoComponent />
+          </div>
+        </div>
       </div>
     );
   }

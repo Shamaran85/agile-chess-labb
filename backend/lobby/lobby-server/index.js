@@ -5,11 +5,17 @@ const { express, server, app, io, MongoClient, jwt, // Import system packages
 
 const cors = require('cors');
 
+<<<<<<< HEAD
 const { trackTime, updateTime, getTime } = require('./helpers/track_time');
 
 const { getUsers, searchUser, insertUser, updateUser, // Import the user route functions
+=======
+const { getUsers, searchUser, insertUser, updateUser, checkLoginInfo, checkUserExist, // Import the user route functions
+>>>>>>> development
     getEvents, searchEvent, insertEvent, updateEvent // Import the event route functions
 } = require('./routes');
+
+const mw = require('./middleware');
 
 // Server listening port
 server.listen(webServer.port, () => {
@@ -21,7 +27,22 @@ app.use(cors());// Using CORS
 app.use(express.json()); // Using for POST - Getting body.data
 
 // ---------- CONNECTION CONTROL -----------
-io.on('connection', (socket) => {
+io.use((socket, next) => {
+    // Connection authentication checking
+    const handshake = socket.handshake;
+
+    if (handshake.query && handshake.query.token) {
+        const clientAccessToken = handshake.query.token;
+        jwt.verify(clientAccessToken, privateKey, (err, decoded) => {
+            if (err) return next(new Error('Authentication error'));
+            socket.decoded = decoded;
+            next();
+        });
+    } else {
+        next(new Error('Authentication error'));
+    }
+}).on('connection', (socket) => {
+    // Authenticated connection tasks are here
     console.log('A user is connected');
 
     // Check if the connection is broken from the client
@@ -68,13 +89,21 @@ io.on('connection', (socket) => {
 })
 //--------- END CONNECTION CONTROL ---------
 
-// ---------- BEGIN OF ROUTE DEFINITION -------------
+
 // App route
-/* app.get('/', function (req, res, next) {
+app.get('/', function (req, res, next) {
     res.status(200)
         .sendFile(__dirname + webServer.rootDir + '/' + webServer.defaultPage);
-}); */
+});
 
+
+// ------ AUTHENTICATION ------
+// Using checkAuth middleware
+app.use(mw({ mwid: 'checkAuth' }));
+// ------ END AUTHENTICATION ------
+
+
+// ---------- BEGIN OF ROUTE DEFINITION -------------
 // Token route
 /* app.get('/token', function(req, res){
     var token = jwt.sign({ appname: "chess" }, privateKey);
@@ -92,13 +121,17 @@ app.get('/events', getEvents);
 app.get('/events/:id', searchEvent);
 app.post('/events', insertEvent);
 app.put('/events/:id', updateEvent);
+
+// Login system
+app.post('/auth', checkLoginInfo);
+app.post('/checkuser', checkUserExist);
 //------------ END OF ROUTE DEFINITION --------------
 
 //--------------- FUNCTIONS -----------------
 function getCurrentUserListAndEmit(socket, dbo, userArgs) {
     try {
         dbo.collection(userArgs.collection)
-            .find({}).toArray((err, users) => {
+            .find({}, { projection: { password: 0 } }).toArray((err, users) => {
                 if (!err) {
                     socket.emit(userArgs.ioEvent, users);
                 } else {
@@ -125,3 +158,6 @@ function getCurrentEventListAndEmit(socket, dbo, eventArgs) {
     }
 }
 //------------- END FUNCTIONS ---------------
+
+// Using errorHandling middleware
+app.use(mw({ mwid: 'errorHandling' }));
