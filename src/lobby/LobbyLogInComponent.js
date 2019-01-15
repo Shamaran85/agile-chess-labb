@@ -12,7 +12,6 @@ class LobbyLoginComponent extends Component {
       isLoggedIn: false,
       errorMessage: '',
       isRegistered: true,
-      isValid: false,
       userName: {
         value: '',
         valid: false,

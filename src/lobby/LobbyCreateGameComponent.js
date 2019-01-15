@@ -62,8 +62,20 @@ class LobbyCreateGameComponent extends Component {
   };
 
   showModal = () => {
-    this.setState({ show: true });
-    /*  this.setState({ ...this.state, show: !this.state.show }); */
+    
+    this.setState(
+      { 
+        ...this.state,
+        show: true,
+        rankOn: false,
+        time: 180,
+        ratingLimits: {
+          low: 1600,
+          high: 2000
+        },
+        playerColor: ''
+      }
+    );
   };
 
   hideModal = () => {
