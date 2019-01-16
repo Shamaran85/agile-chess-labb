@@ -1,0 +1,11 @@
+body{
+  background-color: whitesmoke;
+}
+
+.filter-div{
+  background-color: white;
+  border: solid lightgrey 1px;
+  margin-left: 20%;
+  margin-right: 20%;
+  padding: 20px;
+}

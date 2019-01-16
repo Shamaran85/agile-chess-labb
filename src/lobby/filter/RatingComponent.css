@@ -1,0 +1,77 @@
+.RatingComponent{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.RatingComponent h3{
+  color:grey;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-weight: normal;
+}
+
+.input-range__slider {
+  background: whitesmoke;
+  border: 1px solid lightgrey;
+  cursor: pointer;
+  display: block;
+  height: 1rem;
+  margin-left: -0.5rem;
+  margin-top: -0.85rem;
+  outline: none;
+  position: absolute;
+  top: 50%;
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+  width: 1rem; }
+.input-range__slider:active {
+  transform: scale(1.3); }
+.input-range__slider:focus {
+  box-shadow: 0 0 0 5px rgba(63, 81, 181, 0.2); }
+.input-range--disabled .input-range__slider {
+  background: #cccccc;
+  border: 1px solid #cccccc;
+  box-shadow: none;
+  transform: none;
+}
+
+.input-range__label-container {
+  left: -50%;
+  position: relative;
+}
+
+.input-range__label--min .input-range__label-container {
+  display: none;
+}
+
+.input-range__label--max .input-range__label-container {
+  left: 50%;
+  display: none;
+}
+
+.input-range__track {
+  background: #eeeeee;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  display: block;
+  height: 0.7rem;
+  position: relative;
+  transition: left 0.3s ease-out, width 0.3s ease-out;
+}
+
+.input-range__track--background {
+  left: 130px;
+  margin-top: -0.15rem;
+  position: absolute;
+  right: 20px;
+  top: 50%; }
+
+.input-range--disabled .input-range__track {
+  background: #eeeeee;
+}
+
+
+
+.input-range__track--active {
+  background: #ce500d;
+
+}
